@@ -19,7 +19,7 @@ public struct Rect {
 // MARK: - CustomStringConvertible
 extension Rect: CustomStringConvertible {
     public var description: String {
-        return String(format: "Rect(origin: %@, size: %@)", origin.description, size.description)
+        return "Rect(origin: \(origin.description), size: \(size.description))"
     }
 }
 

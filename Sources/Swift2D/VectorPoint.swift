@@ -40,7 +40,7 @@ public struct VectorPoint {
 // MARK: - CustomStringConvertible
 extension VectorPoint: CustomStringConvertible {
     public var description: String {
-        return String(format: "VectorPoint(x: (%@, %.5f), y: (%@, %.5f))", x.sign.rawValue, x.multiplier, y.sign.rawValue, y.multiplier)
+        return String(format: "VectorPoint(x: (\(x.sign.rawValue), %.5f), y: (\(y.sign.rawValue), %.5f))", x.multiplier, y.multiplier)
     }
 }
 
