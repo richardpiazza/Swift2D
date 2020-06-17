@@ -1,9 +1,14 @@
 import Foundation
 
-/// A structure that contains width and height values.
+/// A representation of two-dimensional width and height values.
 public struct Size {
     public var width: Float
     public var height: Float
+    
+    public init() {
+        width = 0.0
+        height = 0.0
+    }
     
     public init(width: Float, height: Float) {
         self.width = width
@@ -19,7 +24,7 @@ public struct Size {
 // MARK: - CustomStringConvertible
 extension Size: CustomStringConvertible {
     public var description: String {
-        return String(format: "Size(width: %.5f, height: %.5f)", width, height)
+        return "Size(width: \(width), height: \(height))"
     }
 }
 
@@ -35,22 +40,27 @@ public extension Size {
 
 // MARK: - Instance Functionality
 public extension Size {
+    /// The horizontal radius (½ of `width`)
     var xRadius: Float {
-        return width / 2.0
+        return abs(width) / 2.0
     }
     
+    /// The vertical radius (½ of `height`)
     var yRadius: Float {
-        return height / 2.0
+        return abs(height) / 2.0
     }
     
+    /// The largest radius, out of `xRadius` & `yRadius`.
     var maxRadius: Float {
         return max(xRadius, yRadius)
     }
     
+    /// The smallest radius, out of `xRadius` & `yRadius`.
     var minRadius: Float {
         return min(xRadius, yRadius)
     }
     
+    /// The `Point` at which the `xRadius` & `yRadius` intersect.
     var center: Point {
         return Point(x: xRadius, y: yRadius)
     }

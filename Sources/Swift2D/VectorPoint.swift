@@ -2,6 +2,7 @@ import Foundation
 
 /// A cartesian-based struct that describes the relationship of any particular `Point`
 /// to the _center_ of a cartesian graph.
+@available(*, deprecated, message: "This steps beyond the initial intent of the library. See https://github.com/richardpiazza/GraphPoint")
 public struct VectorPoint {
     public enum Sign: String {
         case plus = "+"
@@ -38,6 +39,7 @@ public struct VectorPoint {
 }
 
 // MARK: - CustomStringConvertible
+@available(*, deprecated)
 extension VectorPoint: CustomStringConvertible {
     public var description: String {
         return String(format: "VectorPoint(x: (\(x.sign.rawValue), %.5f), y: (\(y.sign.rawValue), %.5f))", x.multiplier, y.multiplier)
@@ -45,6 +47,7 @@ extension VectorPoint: CustomStringConvertible {
 }
 
 // MARK: - Equatable
+@available(*, deprecated)
 extension VectorPoint: Equatable {
     public static func == (lhs: VectorPoint, rhs: VectorPoint) -> Bool {
         guard lhs.x.sign == rhs.x.sign else {
@@ -65,6 +68,7 @@ extension VectorPoint: Equatable {
 }
 
 // MARK: - Instance Functionality
+@available(*, deprecated)
 public extension VectorPoint {
     /// Calculates the `Point` for this instance in the specified `Rect`.
     func translate(to rect: Rect) -> Point {

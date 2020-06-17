@@ -14,7 +14,7 @@ public extension CGSize {
     }
     
     var size: Size {
-        return Size(width: Float(width), height: Float(width))
+        return Size(width: Float(width), height: Float(height))
     }
 }
 #endif
