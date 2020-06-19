@@ -112,35 +112,3 @@ public extension Rect {
         return origin.y + size.height
     }
 }
-
-// MARK: - Instance Functionality
-@available(*, deprecated, message: "This steps beyond the initial intent of the library. See https://github.com/richardpiazza/GraphPoint")
-public extension Rect {
-    /// AKA, the center of the Rect.
-    var cartesianOrigin: Point {
-        return center
-    }
-    
-    /// Translates the provided point within the `Rect` from using the top-left
-    /// as the _origin_, to using the center as the _origin_.
-    ///
-    /// For example: Given `Rect(x: 0, y: 0, width: 100, height: 100)`, the point
-    /// `Point(x: 25, y: 25)` would translate to `Point(x: -25, y: 25)`.
-    func cartesianPoint(for point: Point) -> Point {
-        var cartesianPoint: Point = .zero
-        
-        if point.x < center.x {
-            cartesianPoint.x = -(center.x - point.x)
-        } else if point.x > center.x {
-            cartesianPoint.x = point.x - center.x
-        }
-        
-        if point.y > center.y {
-            cartesianPoint.y = -(point.y - center.y)
-        } else if point.y < center.y {
-            cartesianPoint.y = center.y - point.y
-        }
-        
-        return cartesianPoint
-    }
-}
