@@ -1,8 +1,8 @@
 import XCTest
+@testable import Swift2D
 #if canImport(CoreGraphics)
 import CoreGraphics
 #endif
-@testable import Swift2D
 
 final class PointTests: XCTestCase {
     
@@ -30,7 +30,6 @@ final class PointTests: XCTestCase {
     }
     
     func testPointCoreGraphics() throws {
-        #if canImport(CoreGraphics)
         let point = Point(x: 45, y: 60)
         var cgPoint = point.cgPoint
         XCTAssertEqual(cgPoint.x, 45.0)
@@ -39,8 +38,5 @@ final class PointTests: XCTestCase {
         cgPoint = CGPoint(Point(x: 24.7, y: 31.5))
         XCTAssertEqual(cgPoint.x, 24.7, accuracy: 0.0001)
         XCTAssertEqual(cgPoint.y, 31.5)
-        #else
-        XCTSkip("This test requires the CoreGraphics framework.")
-        #endif
     }
 }

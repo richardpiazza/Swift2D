@@ -1,6 +1,7 @@
 import Foundation
 #if canImport(CoreGraphics)
 import CoreGraphics
+#endif
 
 public extension Size {
     var cgSize: CGSize {
@@ -17,4 +18,3 @@ public extension CGSize {
         return Size(width: Float(width), height: Float(height))
     }
 }
-#endif

@@ -1,5 +1,8 @@
 import XCTest
 @testable import Swift2D
+#if canImport(CoreGraphics)
+import CoreGraphics
+#endif
 
 final class SizeTests: XCTestCase {
     
@@ -32,7 +35,6 @@ final class SizeTests: XCTestCase {
     }
     
     func testSizeCoreGraphics() throws {
-        #if canImport(CoreGraphics)
         let size = Size(width: 45, height: 60)
         var cgSize = size.cgSize
         XCTAssertEqual(cgSize.width, 45.0)
@@ -41,8 +43,5 @@ final class SizeTests: XCTestCase {
         cgSize = CGSize(Size(width: 24.7, height: 31.5))
         XCTAssertEqual(cgSize.width, 24.7, accuracy: 0.0001)
         XCTAssertEqual(cgSize.height, 31.5)
-        #else
-        XCTSkip("This test requires the CoreGraphics framework.")
-        #endif
     }
 }

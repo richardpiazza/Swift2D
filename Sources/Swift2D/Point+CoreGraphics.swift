@@ -1,6 +1,7 @@
 import Foundation
 #if canImport(CoreGraphics)
 import CoreGraphics
+#endif
 
 public extension Point {
     var cgPoint: CGPoint {
@@ -17,4 +18,3 @@ public extension CGPoint {
         return Point(x: Float(x), y: Float(y))
     }
 }
-#endif

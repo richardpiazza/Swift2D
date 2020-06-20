@@ -1,5 +1,8 @@
 import XCTest
 @testable import Swift2D
+#if canImport(CoreGraphics)
+import CoreGraphics
+#endif
 
 final class RectTests: XCTestCase {
     
@@ -60,7 +63,6 @@ final class RectTests: XCTestCase {
     }
     
     func testRectCoreGraphics() throws {
-        #if canImport(CoreGraphics)
         var cgRect = Rect(x: 1.2, y: 3.4, width: 5.6, height: 7.8).cgRect
         XCTAssertEqual(cgRect.origin.x, 1.2, accuracy: 0.00001)
         XCTAssertEqual(cgRect.origin.y, 3.4, accuracy: 0.00001)
@@ -72,8 +74,5 @@ final class RectTests: XCTestCase {
         XCTAssertEqual(rect.y, 21.0, accuracy: 0.00001)
         XCTAssertEqual(rect.width, 34.0, accuracy: 0.00001)
         XCTAssertEqual(rect.height, 43.0, accuracy: 0.00001)
-        #else
-        XCTSkip("This test requires the CoreGraphics framework.")
-        #endif
     }
 }

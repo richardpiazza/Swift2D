@@ -1,6 +1,7 @@
 import Foundation
 #if canImport(CoreGraphics)
 import CoreGraphics
+#endif
 
 public extension Rect {
     var cgRect: CGRect {
@@ -17,4 +18,3 @@ public extension CGRect {
         return Rect(origin: origin.point, size: size.size)
     }
 }
-#endif
