@@ -7,9 +7,35 @@ import CoreGraphics
 final class SizeTests: XCTestCase {
     
     static var allTests = [
-        ("testSize", testSize),
-        ("testSizeCoreGraphics", testSizeCoreGraphics),
+        ("testInitializers", testInitializers),
+        ("testCustomStringConvertible", testCustomStringConvertible),
+        ("testEquatable", testEquatable),
+        ("testCodable", testCodable),
+        ("testStaticReferences", testStaticReferences),
+        ("testComputedProperties", testComputedProperties),
+        ("testCoreGraphics", testCoreGraphics),
     ]
+    
+    func testInitializers() throws {
+    }
+    
+    func testCustomStringConvertible() throws {
+    }
+    
+    func testEquatable() throws {
+    }
+    
+    func testCodable() throws {
+    }
+    
+    func testStaticReferences() {
+    }
+    
+    func testComputedProperties() {
+    }
+    
+    func testCoreGraphics() throws {
+    }
     
     func testSize() throws {
         var size: Size = .zero
