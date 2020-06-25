@@ -1,11 +1,19 @@
-// MARK: - Static References
+// MARK: - Common References
 public extension Size {
     static let zero: Size = Size(width: 0.0, height: 0.0)
     static let nan: Size = Size(width: Float.nan, height: Float.nan)
-    static let infinite: Size = Size(width: Float.infinity, height: Float.infinity)
+    internal static let infinite: Size = Size(width: Float.greatestFiniteMagnitude, height: Float.greatestFiniteMagnitude)
+    
+    var isZero: Bool {
+        return self == .zero
+    }
+    
+    var isNaN: Bool {
+        return self == .nan
+    }
 }
 
-// MARK: - Instance Functionality
+// MARK: - Convenience Accessors
 public extension Size {
     /// The horizontal radius (½ of `width`)
     var xRadius: Float {

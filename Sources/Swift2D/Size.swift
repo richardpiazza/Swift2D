@@ -38,12 +38,12 @@ extension Size: Equatable {
             return true
         }
         
+        if (lhs.width.isInfinite && rhs.width.isInfinite) && (lhs.height.isInfinite && rhs.height.isInfinite) {
+            return true
+        }
+        
         return lhs.width == rhs.width && lhs.height == rhs.height
     }
-}
-
-// MARK: - Hashable
-extension Size: Hashable {
 }
 
 // MARK: - Codable

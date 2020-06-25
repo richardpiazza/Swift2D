@@ -1,9 +1,29 @@
-// MARK: - Static References
+// MARK: - Common References
 public extension Rect {
     static let zero: Rect = Rect(origin: .zero, size: .zero)
     static let nan: Rect = Rect(origin: .nan, size: .nan)
     static let infinite: Rect = Rect(origin: .infinite, size: .infinite)
-    static let null: Rect = Rect(origin: .infinite, size: .zero)
+    static let null: Rect = Rect(origin: .null, size: .zero)
+    
+    var isZero: Bool {
+        return self == .zero
+    }
+    
+    var isNaN: Bool {
+        return self == .nan
+    }
+    
+    var isInfinite: Bool {
+        return self == .infinite
+    }
+    
+    var isNull: Bool {
+        return origin == .infinite
+    }
+    
+    var isEmpty: Bool {
+        return isNull || width == 0.0 || height == 0.0
+    }
 }
 
 // MARK: - Convenience Accessors
@@ -77,4 +97,8 @@ public extension Rect {
         
         return origin.y + size.height
     }
+}
+
+public extension Rect {
+    
 }

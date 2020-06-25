@@ -37,10 +37,6 @@ extension Rect: CustomStringConvertible {
 extension Rect: Equatable {
 }
 
-// MARK: - Hashable
-extension Rect: Hashable {
-}
-
 // MARK: - Codable
 extension Rect: Codable {
 }

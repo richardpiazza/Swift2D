@@ -38,12 +38,12 @@ extension Point: Equatable {
             return true
         }
         
+        if (lhs.x.isInfinite && rhs.x.isInfinite) && (lhs.y.isInfinite && rhs.y.isInfinite) {
+            return true
+        }
+        
         return lhs.x == rhs.x && lhs.y == rhs.y
     }
-}
-
-// MARK: - Hashable
-extension Point: Hashable {
 }
 
 // MARK: - Codable
