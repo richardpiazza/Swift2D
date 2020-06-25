@@ -1,5 +1,3 @@
-import Foundation
-
 /// A representation of two-dimensional width and height values.
 public struct Size {
     public var width: Float
@@ -19,6 +17,11 @@ public struct Size {
         self.width = Float(width)
         self.height = Float(height)
     }
+    
+    public init(width: Double, height: Double) {
+        self.width = Float(width)
+        self.height = Float(height)
+    }
 }
 
 // MARK: - CustomStringConvertible
@@ -30,38 +33,19 @@ extension Size: CustomStringConvertible {
 
 // MARK: - Equatable
 extension Size: Equatable {
+    public static func ==(lhs: Size, rhs: Size) -> Bool {
+        if (lhs.width.isNaN && rhs.width.isNaN) && (lhs.height.isNaN && rhs.height.isNaN) {
+            return true
+        }
+        
+        return lhs.width == rhs.width && lhs.height == rhs.height
+    }
 }
 
-// MARK: - Static References
-public extension Size {
-    static let nan: Size = Size(width: .nan, height: .nan)
-    static let zero: Size = Size(width: 0.0, height: 0.0)
+// MARK: - Hashable
+extension Size: Hashable {
 }
 
-// MARK: - Instance Functionality
-public extension Size {
-    /// The horizontal radius (½ of `width`)
-    var xRadius: Float {
-        return abs(width) / 2.0
-    }
-    
-    /// The vertical radius (½ of `height`)
-    var yRadius: Float {
-        return abs(height) / 2.0
-    }
-    
-    /// The largest radius, out of `xRadius` & `yRadius`.
-    var maxRadius: Float {
-        return max(xRadius, yRadius)
-    }
-    
-    /// The smallest radius, out of `xRadius` & `yRadius`.
-    var minRadius: Float {
-        return min(xRadius, yRadius)
-    }
-    
-    /// The `Point` at which the `xRadius` & `yRadius` intersect.
-    var center: Point {
-        return Point(x: xRadius, y: yRadius)
-    }
+// MARK: - Codable
+extension Size: Codable {
 }

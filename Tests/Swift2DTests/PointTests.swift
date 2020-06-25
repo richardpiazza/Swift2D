@@ -20,6 +20,10 @@ final class PointTests: XCTestCase {
         XCTAssertTrue(point.x.isNaN)
         XCTAssertTrue(point.y.isNaN)
         
+        point = .infinite
+        XCTAssertTrue(point.x.isInfinite)
+        XCTAssertTrue(point.y.isInfinite)
+        
         point = .init(x: 47.0, y: 42.0)
         XCTAssertNotEqual(point, Point(x: 124.0, y: 56.0))
         

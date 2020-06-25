@@ -1,6 +1,7 @@
-import Foundation
 #if canImport(CoreGraphics)
 import CoreGraphics
+#else
+import Foundation
 #endif
 
 public extension Rect {
