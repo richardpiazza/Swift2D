@@ -18,7 +18,7 @@ public extension Rect {
     }
     
     var isNull: Bool {
-        return origin == .infinite
+        return origin == .infinite || origin == .null
     }
     
     var isEmpty: Bool {
@@ -97,8 +97,23 @@ public extension Rect {
         
         return origin.y + size.height
     }
+    
+    /// Returns a rectangle with a positive width and height.
+    var standardized: Rect {
+        guard !isNull else  {
+            return .null
+        }
+        
+        return Rect(x: minX, y: minY, width: abs(width), height: abs(height))
+    }
 }
 
+// MARK: - Relationships (intersection/contains)
+public extension Rect {
+    
+}
+
+// MARK: - Transformations (offset/inset)
 public extension Rect {
     
 }

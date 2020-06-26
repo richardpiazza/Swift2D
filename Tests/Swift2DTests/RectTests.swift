@@ -64,15 +64,141 @@ final class RectTests: XCTestCase {
     }
     
     func testEquatable() throws {
+        var r1: Rect = .zero
+        var r2: Rect = .zero
+        XCTAssertTrue(r1 == r2)
+        
+        r1 = .nan
+        r2 = .nan
+        XCTAssertTrue(r1 == r2)
+        
+        r1 = .infinite
+        r2 = .infinite
+        XCTAssertTrue(r1 == r2)
+        
+        r1 = .null
+        r2 = .null
+        XCTAssertTrue(r1 == r2)
+        
+        r1 = Rect(x: 10, y: 10, width: 20, height: 20)
+        r2 = Rect(x: 100, y: 100, width: 200, height: 200)
+        XCTAssertFalse(r1 == r2)
+        
+        r2 = r1
+        XCTAssertTrue(r1 == r2)
     }
     
     func testCodable() throws {
+        let json = """
+        {
+            "origin": {
+                "x": 1.2,
+                "y": 2.3
+            },
+            "size": {
+                "width": 3.4,
+                "height": 4.5
+            }
+        }
+        """
+        
+        let data = try XCTUnwrap(json.data(using: .utf8))
+        var rect = try JSONDecoder().decode(Rect.self, from: data)
+        XCTAssertEqual(rect.origin.x, 1.2)
+        XCTAssertEqual(rect.origin.y, 2.3)
+        XCTAssertEqual(rect.size.width, 3.4)
+        XCTAssertEqual(rect.size.height, 4.5)
+        
+        rect.origin = Point(x: 9.8, y: 8.7)
+        rect.size = Size(width: 7.6, height: 6.5)
+        
+        let encoded = try JSONEncoder().encode(rect)
+        let dictionary = try XCTUnwrap(try JSONSerialization.jsonObject(with: encoded, options: .init()) as? [String: [String: Float]])
+        XCTAssertEqual(dictionary["origin"]?["x"], 9.8)
+        XCTAssertEqual(dictionary["origin"]?["y"], 8.7)
+        XCTAssertEqual(dictionary["size"]?["width"], 7.6)
+        XCTAssertEqual(dictionary["size"]?["height"], 6.5)
     }
     
     func testStaticReferences() {
+        var rect: Rect = .zero
+        XCTAssertEqual(rect.origin.x, 0.0)
+        XCTAssertEqual(rect.origin.y, 0.0)
+        XCTAssertEqual(rect.size.width, 0.0)
+        XCTAssertEqual(rect.size.height, 0.0)
+        XCTAssertTrue(rect.isZero)
+        XCTAssertFalse(rect.isNaN)
+        XCTAssertFalse(rect.isInfinite)
+        XCTAssertFalse(rect.isNull)
+        XCTAssertTrue(rect.isEmpty)
+        
+        rect = .nan
+        XCTAssertTrue(rect.origin.x.isNaN)
+        XCTAssertTrue(rect.origin.y.isNaN)
+        XCTAssertTrue(rect.size.width.isNaN)
+        XCTAssertTrue(rect.size.height.isNaN)
+        XCTAssertFalse(rect.isZero)
+        XCTAssertTrue(rect.isNaN)
+        XCTAssertFalse(rect.isInfinite)
+        XCTAssertFalse(rect.isNull)
+        XCTAssertFalse(rect.isEmpty)
+        
+        rect = .infinite
+        XCTAssertEqual(rect.origin.x, -Float.greatestFiniteMagnitude / 2)
+        XCTAssertEqual(rect.origin.y, -Float.greatestFiniteMagnitude / 2)
+        XCTAssertEqual(rect.size.width, Float.greatestFiniteMagnitude)
+        XCTAssertEqual(rect.size.height, Float.greatestFiniteMagnitude)
+        XCTAssertFalse(rect.isZero)
+        XCTAssertFalse(rect.isNaN)
+        XCTAssertTrue(rect.isInfinite)
+        XCTAssertTrue(rect.isNull)
+        XCTAssertTrue(rect.isEmpty)
+        
+        rect = .null
+        XCTAssertEqual(rect.origin.x, Float.infinity)
+        XCTAssertEqual(rect.origin.y, Float.infinity)
+        XCTAssertEqual(rect.size.width, 0.0)
+        XCTAssertEqual(rect.size.height, 0.0)
+        XCTAssertFalse(rect.isZero)
+        XCTAssertFalse(rect.isNaN)
+        XCTAssertFalse(rect.isInfinite)
+        XCTAssertTrue(rect.isNull)
+        XCTAssertTrue(rect.isEmpty)
     }
     
     func testComputedProperties() {
+        var rect: Rect = .zero
+        
+        rect = Rect(x: 50.0, y: 50.0, width: 80.0, height: 80.0)
+        XCTAssertEqual(rect.x, 50.0)
+        XCTAssertEqual(rect.y, 50.0)
+        XCTAssertEqual(rect.width, 80.0)
+        XCTAssertEqual(rect.height, 80.0)
+        XCTAssertEqual(rect.center, Point(x: 90.0, y: 90.0))
+        XCTAssertEqual(rect.minX, 50.0)
+        XCTAssertEqual(rect.midX, 90.0)
+        XCTAssertEqual(rect.maxX, 130.0)
+        XCTAssertEqual(rect.minY, 50.0)
+        XCTAssertEqual(rect.midY, 90.0)
+        XCTAssertEqual(rect.maxY, 130.0)
+        XCTAssertEqual(rect.standardized, Rect(x: 50.0, y: 50.0, width: 80.0, height: 80.0))
+        
+        rect = Rect(x: 50.0, y: 50.0, width: -80.0, height: -80.0)
+        XCTAssertEqual(rect.x, 50.0)
+        XCTAssertEqual(rect.y, 50.0)
+        XCTAssertEqual(rect.width, -80.0)
+        XCTAssertEqual(rect.height, -80.0)
+        XCTAssertEqual(rect.center, Point(x: 10.0, y: 10.0))
+        XCTAssertEqual(rect.minX, -30.0)
+        XCTAssertEqual(rect.midX, 10.0)
+        XCTAssertEqual(rect.maxX, 50.0)
+        XCTAssertEqual(rect.minY, -30.0)
+        XCTAssertEqual(rect.midY, 10.0)
+        XCTAssertEqual(rect.maxY, 50.0)
+        XCTAssertEqual(rect.standardized, Rect(x: -30.0, y: -30.0, width: 80.0, height: 80.0))
+        
+        rect = .null
+        XCTAssertTrue(rect.standardized.isNull)
     }
     
     func testCoreGraphics() throws {

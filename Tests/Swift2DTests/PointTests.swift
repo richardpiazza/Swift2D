@@ -18,7 +18,11 @@ final class PointTests: XCTestCase {
     
     func testInitializers() throws {
         var point: Point = .zero
-            
+        
+        point = .init()
+        XCTAssertEqual(point.x, 0.0)
+        XCTAssertEqual(point.y, 0.0)
+        
         point = .init(x: 5, y: 8)
         XCTAssertEqual(point.x, 5.0)
         XCTAssertEqual(point.y, 8.0)
@@ -82,17 +86,20 @@ final class PointTests: XCTestCase {
     }
     
     func testStaticReferences() {
-        XCTAssertEqual(Point.zero.x, 0.0)
-        XCTAssertEqual(Point.zero.y, 0.0)
-        XCTAssertTrue(Point.nan.x.isNaN)
-        XCTAssertTrue(Point.nan.y.isNaN)
+        var point: Point = .zero
+        XCTAssertEqual(point.x, 0.0)
+        XCTAssertEqual(point.y, 0.0)
+        XCTAssertTrue(point.isZero)
+        XCTAssertFalse(point.isNaN)
+        
+        point = .nan
+        XCTAssertTrue(point.x.isNaN)
+        XCTAssertTrue(point.y.isNaN)
+        XCTAssertFalse(point.isZero)
+        XCTAssertTrue(point.isNaN)
     }
     
     func testComputedProperties() {
-        XCTAssertTrue(Point.zero.isZero)
-        XCTAssertTrue(Point.nan.isNaN)
-        XCTAssertFalse(Point(x: 2, y: 9).isZero)
-        XCTAssertFalse(Point(x: 88.8, y: 88.8).isNaN)
     }
     
     func testCoreGraphics() throws {
