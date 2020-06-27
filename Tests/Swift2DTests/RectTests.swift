@@ -223,15 +223,73 @@ final class RectTests: XCTestCase {
     }
     
     func testContains() {
+        var rect: Rect = Rect(x: 0, y: 0, width: 100, height: 100)
+        var point: Point = Point(x: 50, y: 50)
+        var subRect: Rect = Rect(x: 25, y: 25, width: 50, height: 50)
+        
+        XCTAssertTrue(rect.contains(point))
+        XCTAssertTrue(rect.contains(subRect))
+        
+        point = Point(x: 150, y: 150)
+        subRect = Rect(x: 51, y: 51, width: 50, height: 50)
+        
+        XCTAssertFalse(rect.contains(point))
+        XCTAssertFalse(rect.contains(subRect))
+        
+        rect = .null
+        XCTAssertFalse(rect.contains(point))
+        rect = .zero
+        XCTAssertFalse(rect.contains(point))
     }
     
     func testIntersects() {
+        let rect1: Rect = Rect(x: 0, y: 0, width: 100, height: 100)
+        var rect2: Rect = Rect(x: 75, y: 75, width: 100, height: 100)
+        XCTAssertTrue(rect1.intersects(rect2))
+        rect2.origin = Point(x: 101, y: 101)
+        XCTAssertFalse(rect1.intersects(rect2))
     }
     
     func testIntersection() {
+        var rect1: Rect = .null
+        var rect2: Rect = .null
+        XCTAssertTrue(rect1.intersection(rect2).isNull)
+        
+        rect1 = Rect(x: 25, y: 25, width: 50, height: 50)
+        XCTAssertTrue(rect1.intersection(rect2).isNull)
+        
+        rect2 = Rect(x: 50, y: 50, width: 50, height: 50)
+        
+        var rect = rect1.intersection(rect2)
+        XCTAssertEqual(rect.origin.x, 50)
+        XCTAssertEqual(rect.origin.y, 50)
+        XCTAssertEqual(rect.size.width, 25)
+        XCTAssertEqual(rect.size.height, 25)
+        
+        rect2 = Rect(x: 75.1, y: 75, width: 25, height: 25)
+        rect = rect1.intersection(rect2)
+        XCTAssertTrue(rect.isNull)
     }
     
     func testUnion() {
+        var rect1: Rect = .null
+        var rect2: Rect = .null
+        XCTAssertTrue(rect1.union(rect2).isNull)
+        
+        rect1 = Rect(x: 25, y: 25, width: 25, height: 25)
+        var rect = rect1.union(rect2)
+        XCTAssertEqual(rect.origin.x, 25)
+        XCTAssertEqual(rect.origin.y, 25)
+        XCTAssertEqual(rect.size.width, 25)
+        XCTAssertEqual(rect.size.height, 25)
+        
+        rect2 = Rect(x: 50, y: 50, width: 25, height: 25)
+        rect = rect1.union(rect2)
+        
+        XCTAssertEqual(rect.origin.x, 25)
+        XCTAssertEqual(rect.origin.y, 25)
+        XCTAssertEqual(rect.size.width, 50)
+        XCTAssertEqual(rect.size.height, 50)
     }
     
     func testOffsetBy() {
@@ -254,8 +312,12 @@ final class RectTests: XCTestCase {
     }
     
     func testInsetBy() {
-        var rect: Rect = .init(x: 44.33, y: 22.11, width: 11.22, height: 33.44)
+        var rect: Rect = .null
         var r = rect.insetBy(dx: 10.0, dy: 10.0)
+        XCTAssertTrue(r.isNull)
+        
+        rect = .init(x: 44.33, y: 22.11, width: 11.22, height: 33.44)
+        r = rect.insetBy(dx: 10.0, dy: 10.0)
         XCTAssertTrue(r.isNull)
         
         rect = .init(x: 44.33, y: 22.11, width: 44.33, height: 22.11)

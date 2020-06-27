@@ -147,7 +147,7 @@ public extension Rect {
         let r2spanH = r2.minX...r2.maxX
         let r2spanV = r2.minY...r2.maxY
         
-        guard r1spanH.overlaps(r2spanH) || r2spanV.overlaps(r2spanV) else {
+        guard r1spanH.overlaps(r2spanH) && r2spanV.overlaps(r2spanV) else {
             return .null
         }
         
@@ -189,7 +189,7 @@ public extension Rect {
         let minX = min(r1.minX, r2.minX)
         let maxX = max(r1.maxX, r2.maxX)
         let minY = min(r1.minY, r2.minY)
-        let maxY = max(r1.minY, r2.maxY)
+        let maxY = max(r1.maxY, r2.maxY)
         
         return Rect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
     }
@@ -218,6 +218,11 @@ public extension Rect {
         rect.origin.y += dy
         rect.size.width -= dx * 2
         rect.size.height -= dy * 2
+        
+        guard rect.size.width >= 0 && rect.size.height >= 0 else {
+            return .null
+        }
+        
         return rect
     }
     
