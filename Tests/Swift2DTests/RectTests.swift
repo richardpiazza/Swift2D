@@ -14,6 +14,13 @@ final class RectTests: XCTestCase {
         ("testStaticReferences", testStaticReferences),
         ("testComputedProperties", testComputedProperties),
         ("testCoreGraphics", testCoreGraphics),
+        ("testContains", testContains),
+        ("testIntersects", testIntersects),
+        ("testIntersection", testIntersection),
+        ("testUnion", testUnion),
+        ("testOffsetBy", testOffsetBy),
+        ("testInsetBy", testInsetBy),
+        ("testExpandedBy", testExpandedBy),
     ]
     
     func testInitializers() throws {
@@ -213,5 +220,64 @@ final class RectTests: XCTestCase {
         XCTAssertEqual(rect.y, 21.0, accuracy: 0.00001)
         XCTAssertEqual(rect.width, 34.0, accuracy: 0.00001)
         XCTAssertEqual(rect.height, 43.0, accuracy: 0.00001)
+    }
+    
+    func testContains() {
+    }
+    
+    func testIntersects() {
+    }
+    
+    func testIntersection() {
+    }
+    
+    func testUnion() {
+    }
+    
+    func testOffsetBy() {
+        let rect: Rect = .init(x: 40, y: 50, width: 60, height: 70)
+        
+        var r: Rect = Rect.null.offsetBy(dx: 10, dy: 10)
+        XCTAssertTrue(r.isNull)
+            
+        r = rect.offsetBy(dx: 10, dy: 10)
+        XCTAssertEqual(r.origin.x, 50)
+        XCTAssertEqual(r.origin.y, 60)
+        XCTAssertEqual(r.size.width, 60)
+        XCTAssertEqual(r.size.height, 70)
+        
+        r = rect.offsetBy(dx: -10, dy: -10)
+        XCTAssertEqual(r.origin.x, 30)
+        XCTAssertEqual(r.origin.y, 40)
+        XCTAssertEqual(r.size.width, 60)
+        XCTAssertEqual(r.size.height, 70)
+    }
+    
+    func testInsetBy() {
+        var rect: Rect = .init(x: 44.33, y: 22.11, width: 11.22, height: 33.44)
+        var r = rect.insetBy(dx: 10.0, dy: 10.0)
+        XCTAssertTrue(r.isNull)
+        
+        rect = .init(x: 44.33, y: 22.11, width: 44.33, height: 22.11)
+        r = rect.insetBy(dx: 10.0, dy: 10.0)
+        XCTAssertEqual(r.origin.x, 54.33)
+        XCTAssertEqual(r.origin.y, 32.11)
+        XCTAssertEqual(r.size.width, 24.33, accuracy: 0.01)
+        XCTAssertEqual(r.size.height, 2.11, accuracy: 0.01)
+        
+        r = rect.insetBy(dx: -10.0, dy: -10.0)
+        XCTAssertEqual(r.origin.x, 34.33)
+        XCTAssertEqual(r.origin.y, 12.11, accuracy: 0.01)
+        XCTAssertEqual(r.size.width, 64.33, accuracy: 0.01)
+        XCTAssertEqual(r.size.height, 42.11, accuracy: 0.01)
+    }
+    
+    func testExpandedBy() {
+        let rect = Rect(x: 44.33, y: 22.11, width: 44.33, height: 22.11)
+        let r = rect.expandedBy(dx: 10.0, dy: 10.0)
+        XCTAssertEqual(r.origin.x, 34.33)
+        XCTAssertEqual(r.origin.y, 12.11, accuracy: 0.01)
+        XCTAssertEqual(r.size.width, 64.33, accuracy: 0.01)
+        XCTAssertEqual(r.size.height, 42.11, accuracy: 0.01)
     }
 }

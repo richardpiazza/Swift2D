@@ -110,10 +110,118 @@ public extension Rect {
 
 // MARK: - Relationships (intersection/contains)
 public extension Rect {
+    func contains(_ point: Point) -> Bool {
+        guard !isNull else {
+            return false
+        }
+        
+        guard !isEmpty else {
+            return false
+        }
+        
+        return (minX..<maxX).contains(point.x) && (minY..<maxY).contains(point.y)
+    }
     
+    func contains(_ rect: Rect) -> Bool {
+        return union(rect) == self
+    }
+    
+    func intersects(_ rect: Rect) -> Bool {
+        return !intersection(rect).isNull
+    }
+    
+    func intersection(_ rect: Rect) -> Rect {
+        guard !isNull else {
+            return .null
+        }
+        
+        guard !rect.isNull else {
+            return .null
+        }
+        
+        let r1 = self.standardized
+        let r1spanH = r1.minX...r1.maxX
+        let r1spanV = r1.minY...r1.maxY
+        
+        let r2 = rect.standardized
+        let r2spanH = r2.minX...r2.maxX
+        let r2spanV = r2.minY...r2.maxY
+        
+        guard r1spanH.overlaps(r2spanH) || r2spanV.overlaps(r2spanV) else {
+            return .null
+        }
+        
+        let overlapH = r1spanH.clamped(to: r2spanH)
+        let width: Float
+        if overlapH == r1spanH {
+            width = r1.width
+        } else if overlapH == r2spanH {
+            width = r2.width
+        } else {
+            width = overlapH.upperBound - overlapH.lowerBound
+        }
+        
+        let overlapV = r1spanV.clamped(to: r2spanV)
+        let height: Float
+        if overlapV == r1spanV {
+            height = r1.height
+        } else if overlapV == r2spanV {
+            height = r2.height
+        } else {
+            height = overlapV.upperBound - overlapV.lowerBound
+        }
+        
+        return Rect(x: overlapH.lowerBound, y: overlapV.lowerBound, width: width, height: height)
+    }
+    
+    func union(_ rect: Rect) -> Rect {
+        guard !isNull else {
+            return rect
+        }
+        
+        guard !rect.isNull else {
+            return self
+        }
+        
+        let r1 = self.standardized
+        let r2 = rect.standardized
+        
+        let minX = min(r1.minX, r2.minX)
+        let maxX = max(r1.maxX, r2.maxX)
+        let minY = min(r1.minY, r2.minY)
+        let maxY = max(r1.minY, r2.maxY)
+        
+        return Rect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
+    }
 }
 
 // MARK: - Transformations (offset/inset)
 public extension Rect {
+    func offsetBy(dx: Float, dy: Float) -> Rect {
+        guard !isNull else {
+            return self
+        }
+        
+        var rect = self.standardized
+        rect.origin.x += dx
+        rect.origin.y += dy
+        return rect
+    }
     
+    func insetBy(dx: Float, dy: Float) -> Rect {
+        guard !isNull else {
+            return self
+        }
+        
+        var rect = self.standardized
+        rect.origin.x += dx
+        rect.origin.y += dy
+        rect.size.width -= dx * 2
+        rect.size.height -= dy * 2
+        return rect
+    }
+    
+    func expandedBy(dx: Float, dy: Float) -> Rect {
+        return insetBy(dx: -dx, dy: -dy)
+    }
 }
