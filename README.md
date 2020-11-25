@@ -3,7 +3,7 @@
 Swift library for working in two-dimensional coordinate systems.
 
 <p>
-  <img src="https://github.com/richardpiazza/Swift2D/workflows/Swift/badge.svg" />
+  <img src="https://github.com/richardpiazza/Swift2D/workflows/Swift/badge.svg?branch=main" />
   <img src="https://img.shields.io/badge/Swift-5.2-orange.svg" />
   <a href="https://twitter.com/richardpiazza">
     <img src="https://img.shields.io/badge/twitter-@richardpiazza-blue.svg?style=flat" alt="Twitter: @richardpiazza" />
