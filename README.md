@@ -18,7 +18,7 @@ Swift2D is distributed using the [Swift Package Manager](https://swift.org/packa
 let package = Package(
     ...
     dependencies: [
-        .package(url: "https://github.com/richardpiazza/Swift2D.git", from: "1.0.0")
+        .package(url: "https://github.com/richardpiazza/Swift2D.git", from: "1.1.0")
     ],
     ...
 )
