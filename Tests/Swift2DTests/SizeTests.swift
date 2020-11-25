@@ -2,6 +2,8 @@ import XCTest
 @testable import Swift2D
 #if canImport(CoreGraphics)
 import CoreGraphics
+#else
+import Foundation
 #endif
 
 final class SizeTests: XCTestCase {
@@ -113,10 +115,10 @@ final class SizeTests: XCTestCase {
     
     func testCoreGraphics() throws {
         let size = Size(width: 45, height: 60)
-        var cgSize = size.cgSize
+        var cgSize = CGSize(size)
         XCTAssertEqual(cgSize.width, 45.0)
         XCTAssertEqual(cgSize.height, 60.0)
-        XCTAssertEqual(cgSize.size, .init(width: 45.0, height: 60.0))
+        XCTAssertEqual(Size(cgSize), .init(width: 45.0, height: 60.0))
         cgSize = CGSize(Size(width: 24.7, height: 31.5))
         XCTAssertEqual(cgSize.width, 24.7, accuracy: 0.0001)
         XCTAssertEqual(cgSize.height, 31.5)

@@ -2,6 +2,8 @@ import XCTest
 @testable import Swift2D
 #if canImport(CoreGraphics)
 import CoreGraphics
+#else
+import Foundation
 #endif
 
 final class RectTests: XCTestCase {
@@ -218,13 +220,13 @@ final class RectTests: XCTestCase {
     }
     
     func testCoreGraphics() throws {
-        var cgRect = Rect(x: 1.2, y: 3.4, width: 5.6, height: 7.8).cgRect
+        var cgRect = CGRect(Rect(x: 1.2, y: 3.4, width: 5.6, height: 7.8))
         XCTAssertEqual(cgRect.origin.x, 1.2, accuracy: 0.00001)
         XCTAssertEqual(cgRect.origin.y, 3.4, accuracy: 0.00001)
         XCTAssertEqual(cgRect.width, 5.6, accuracy: 0.00001)
         XCTAssertEqual(cgRect.height, 7.8, accuracy: 0.00001)
         cgRect = CGRect(.init(origin: Point(x: 12, y: 21), size: Size(width: 34, height: 43)))
-        let rect = cgRect.rect
+        let rect = Rect(cgRect)
         XCTAssertEqual(rect.x, 12.0, accuracy: 0.00001)
         XCTAssertEqual(rect.y, 21.0, accuracy: 0.00001)
         XCTAssertEqual(rect.width, 34.0, accuracy: 0.00001)

@@ -2,6 +2,8 @@ import XCTest
 @testable import Swift2D
 #if canImport(CoreGraphics)
 import CoreGraphics
+#else
+import Foundation
 #endif
 
 final class PointTests: XCTestCase {
@@ -111,10 +113,10 @@ final class PointTests: XCTestCase {
     
     func testCoreGraphics() throws {
         let point = Point(x: 45, y: 60)
-        var cgPoint = point.cgPoint
+        var cgPoint = CGPoint(point)
         XCTAssertEqual(cgPoint.x, 45.0)
         XCTAssertEqual(cgPoint.y, 60.0)
-        XCTAssertEqual(cgPoint.point, .init(x: 45.0, y: 60.0))
+        XCTAssertEqual(Point(cgPoint), .init(x: 45.0, y: 60.0))
         cgPoint = CGPoint(Point(x: 24.7, y: 31.5))
         XCTAssertEqual(cgPoint.x, 24.7, accuracy: 0.0001)
         XCTAssertEqual(cgPoint.y, 31.5)
