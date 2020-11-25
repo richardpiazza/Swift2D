@@ -80,9 +80,16 @@ final class PointTests: XCTestCase {
         point.y = 45.763
         
         let encoded = try JSONEncoder().encode(point)
+        #if canImport(ObjectiveC)
         let dictionary = try XCTUnwrap(try JSONSerialization.jsonObject(with: encoded, options: .init()) as? [String: Float])
         XCTAssertEqual(dictionary["x"], 0.111234)
         XCTAssertEqual(dictionary["y"], 45.763)
+        #else
+        // On Linux systems the cast to 'Float' fails.
+        let dictionary = try XCTUnwrap(try JSONSerialization.jsonObject(with: encoded, options: .init()) as? [String: Double])
+        XCTAssertEqual(dictionary["x"]!, 0.111234, accuracy: 0.0001)
+        XCTAssertEqual(dictionary["y"]!, 45.763, accuracy: 0.001)
+        #endif
     }
     
     func testStaticReferences() {

@@ -120,11 +120,20 @@ final class RectTests: XCTestCase {
         rect.size = Size(width: 7.6, height: 6.5)
         
         let encoded = try JSONEncoder().encode(rect)
+        #if canImport(ObjectiveC)
         let dictionary = try XCTUnwrap(try JSONSerialization.jsonObject(with: encoded, options: .init()) as? [String: [String: Float]])
         XCTAssertEqual(dictionary["origin"]?["x"], 9.8)
         XCTAssertEqual(dictionary["origin"]?["y"], 8.7)
         XCTAssertEqual(dictionary["size"]?["width"], 7.6)
         XCTAssertEqual(dictionary["size"]?["height"], 6.5)
+        #else
+        // On Linux systems the cast to 'Float' fails.
+        let dictionary = try XCTUnwrap(try JSONSerialization.jsonObject(with: encoded, options: .init()) as? [String: [String: Double]])
+        XCTAssertEqual(dictionary["origin"]!["x"]!, 9.8, accuracy: 0.1)
+        XCTAssertEqual(dictionary["origin"]!["y"]!, 8.7, accuracy: 0.1)
+        XCTAssertEqual(dictionary["size"]!["width"]!, 7.6, accuracy: 0.1)
+        XCTAssertEqual(dictionary["size"]!["height"]!, 6.5, accuracy: 0.1)
+        #endif
     }
     
     func testStaticReferences() {
