@@ -76,9 +76,16 @@ final class SizeTests: XCTestCase {
         size.height = 45.763
         
         let encoded = try JSONEncoder().encode(size)
+        #if canImport(ObjectiveC)
         let dictionary = try XCTUnwrap(try JSONSerialization.jsonObject(with: encoded, options: .init()) as? [String: Float])
         XCTAssertEqual(dictionary["width"], 0.111234)
         XCTAssertEqual(dictionary["height"], 45.763)
+        #else
+        // On Linux systems the cast to 'Float' fails.
+        let dictionary = try XCTUnwrap(try JSONSerialization.jsonObject(with: encoded, options: .init()) as? [String: Double])
+        XCTAssertEqual(dictionary["width"]!, 0.111234, accuracy: 0.0001)
+        XCTAssertEqual(dictionary["height"]!, 45.763, accuracy: 0.001)
+        #endif
     }
     
     func testStaticReferences() {
