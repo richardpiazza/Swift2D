@@ -1,4 +1,6 @@
-# Swift2D
+<p align="center">
+    <img src="Swift2D.png" width="512" max-width="90%" alt="Swift2D" />
+</p>
 
 Swift library for working in two-dimensional coordinate systems.
 
@@ -9,6 +11,10 @@ Swift library for working in two-dimensional coordinate systems.
     <img src="https://img.shields.io/badge/twitter-@richardpiazza-blue.svg?style=flat" alt="Twitter: @richardpiazza" />
   </a>
 </p>
+
+## Features
+
+This library provides structs for `Point`, `Size`, and `Rect` based on the swift standard library. No `Foundation` or `CoreGraphics` imports are required.
 
 ## Usage
 
@@ -29,7 +35,3 @@ Then import the **Swift2D** packages wherever you'd like to use it:
 ```swift
 import Swift2D
 ```
-
-## Features
-
-This library provides structs for `Point`, `Size`, and `Rect` based on the swift standard library. No `Foundation` or `CoreGraphics` imports are required.
