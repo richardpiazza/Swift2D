@@ -34,8 +34,8 @@ final class SizeTests: XCTestCase {
         XCTAssertEqual(size.height, 8.123)
         
         size = .init(width: 0.123456789, height: 0.987654321)
-        XCTAssertEqual(size.width, 0.12345679)
-        XCTAssertEqual(size.height, 0.9876543)
+        XCTAssertEqual(size.width, 0.123456789)
+        XCTAssertEqual(size.height, 0.987654321)
     }
     
     func testCustomStringConvertible() throws {
@@ -79,7 +79,7 @@ final class SizeTests: XCTestCase {
         
         let encoded = try JSONEncoder().encode(size)
         #if canImport(ObjectiveC)
-        let dictionary = try XCTUnwrap(try JSONSerialization.jsonObject(with: encoded, options: .init()) as? [String: Float])
+        let dictionary = try XCTUnwrap(try JSONSerialization.jsonObject(with: encoded, options: .init()) as? [String: Double])
         XCTAssertEqual(dictionary["width"], 0.111234)
         XCTAssertEqual(dictionary["height"], 45.763)
         #else

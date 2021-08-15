@@ -29,22 +29,22 @@ public extension Rect {
 // MARK: - Convenience Accessors
 public extension Rect {
     /// The x-coordinate of the rectangle origin
-    var x: Float {
+    var x: Double {
         return origin.x
     }
     
     /// The y-coordinate of the rectangle origin
-    var y: Float {
+    var y: Double {
         return origin.y
     }
     
     /// The width of the rectangle.
-    var width: Float {
+    var width: Double {
         return size.width
     }
     
     /// The height of the rectangle.
-    var height: Float {
+    var height: Double {
         return size.height
     }
     
@@ -53,7 +53,7 @@ public extension Rect {
     }
     
     /// The smallest value for the x-coordinate of the rectangle.
-    var minX: Float {
+    var minX: Double {
         if size.width < 0.0 {
             return origin.x - abs(size.width)
         }
@@ -62,12 +62,12 @@ public extension Rect {
     }
     
     /// The x-coordinate that establishes the center of a rectangle.
-    var midX: Float {
+    var midX: Double {
         return minX + size.xRadius
     }
     
     /// The largest value of the x-coordinate for the rectangle.
-    var maxX: Float {
+    var maxX: Double {
         if size.width < 0.0 {
            return origin.x
         }
@@ -76,7 +76,7 @@ public extension Rect {
     }
     
     /// The smallest value for the y-coordinate of the rectangle.
-    var minY: Float {
+    var minY: Double {
         if size.height < 0.0 {
             return origin.y - abs(size.height)
         }
@@ -85,12 +85,12 @@ public extension Rect {
     }
     
     /// The y-coordinate that establishes the center of the rectangle.
-    var midY: Float {
+    var midY: Double {
         return minY + size.yRadius
     }
     
     /// The largest value for the y-coordinate of the rectangle.
-    var maxY: Float {
+    var maxY: Double {
         if size.height < 0.0 {
             return origin.y
         }
@@ -152,7 +152,7 @@ public extension Rect {
         }
         
         let overlapH = r1spanH.clamped(to: r2spanH)
-        let width: Float
+        let width: Double
         if overlapH == r1spanH {
             width = r1.width
         } else if overlapH == r2spanH {
@@ -162,7 +162,7 @@ public extension Rect {
         }
         
         let overlapV = r1spanV.clamped(to: r2spanV)
-        let height: Float
+        let height: Double
         if overlapV == r1spanV {
             height = r1.height
         } else if overlapV == r2spanV {
@@ -197,7 +197,7 @@ public extension Rect {
 
 // MARK: - Transformations (offset/inset)
 public extension Rect {
-    func offsetBy(dx: Float, dy: Float) -> Rect {
+    func offsetBy(dx: Double, dy: Double) -> Rect {
         guard !isNull else {
             return self
         }
@@ -208,7 +208,7 @@ public extension Rect {
         return rect
     }
     
-    func insetBy(dx: Float, dy: Float) -> Rect {
+    func insetBy(dx: Double, dy: Double) -> Rect {
         guard !isNull else {
             return self
         }
@@ -226,7 +226,7 @@ public extension Rect {
         return rect
     }
     
-    func expandedBy(dx: Float, dy: Float) -> Rect {
+    func expandedBy(dx: Double, dy: Double) -> Rect {
         return insetBy(dx: -dx, dy: -dy)
     }
 }

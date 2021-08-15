@@ -1,26 +1,26 @@
 /// A representation of two-dimensional width and height values.
 public struct Size {
-    public var width: Float
-    public var height: Float
+    public var width: Double
+    public var height: Double
     
     public init() {
         width = 0.0
         height = 0.0
     }
     
-    public init(width: Float, height: Float) {
+    public init(width: Double, height: Double) {
         self.width = width
         self.height = height
     }
     
-    public init(width: Int, height: Int) {
-        self.width = Float(width)
-        self.height = Float(height)
+    public init(width: Float, height: Float) {
+        self.width = Double(width)
+        self.height = Double(height)
     }
     
-    public init(width: Double, height: Double) {
-        self.width = Float(width)
-        self.height = Float(height)
+    public init(width: Int, height: Int) {
+        self.width = Double(width)
+        self.height = Double(height)
     }
 }
 

@@ -1,8 +1,8 @@
 // MARK: - Common References
 public extension Size {
     static let zero: Size = Size(width: 0.0, height: 0.0)
-    static let nan: Size = Size(width: Float.nan, height: Float.nan)
-    internal static let infinite: Size = Size(width: Float.greatestFiniteMagnitude, height: Float.greatestFiniteMagnitude)
+    static let nan: Size = Size(width: Double.nan, height: Double.nan)
+    internal static let infinite: Size = Size(width: Double.greatestFiniteMagnitude, height: Double.greatestFiniteMagnitude)
     
     var isZero: Bool {
         return self == .zero
@@ -16,22 +16,22 @@ public extension Size {
 // MARK: - Convenience Accessors
 public extension Size {
     /// The horizontal radius (½ of `width`)
-    var xRadius: Float {
+    var xRadius: Double {
         return abs(width) / 2.0
     }
     
     /// The vertical radius (½ of `height`)
-    var yRadius: Float {
+    var yRadius: Double {
         return abs(height) / 2.0
     }
     
     /// The largest radius, out of `xRadius` & `yRadius`.
-    var maxRadius: Float {
+    var maxRadius: Double {
         return max(xRadius, yRadius)
     }
     
     /// The smallest radius, out of `xRadius` & `yRadius`.
-    var minRadius: Float {
+    var minRadius: Double {
         return min(xRadius, yRadius)
     }
     

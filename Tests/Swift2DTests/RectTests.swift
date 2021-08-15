@@ -53,10 +53,10 @@ final class RectTests: XCTestCase {
         XCTAssertEqual(rect.size.height, 4.0)
         
         rect = .init(origin: Point(x: 4.87654321, y: 5.87654321), size: Size(width: 6.87654321, height: 7.87654321))
-        XCTAssertEqual(rect.origin.x, 4.8765432)
-        XCTAssertEqual(rect.origin.y, 5.8765432)
-        XCTAssertEqual(rect.size.width, 6.8765432)
-        XCTAssertEqual(rect.size.height, 7.8765432)
+        XCTAssertEqual(rect.origin.x, 4.87654321)
+        XCTAssertEqual(rect.origin.y, 5.87654321)
+        XCTAssertEqual(rect.size.width, 6.87654321)
+        XCTAssertEqual(rect.size.height, 7.87654321)
     }
     
     func testCustomStringConvertible() throws {
@@ -123,7 +123,7 @@ final class RectTests: XCTestCase {
         
         let encoded = try JSONEncoder().encode(rect)
         #if canImport(ObjectiveC)
-        let dictionary = try XCTUnwrap(try JSONSerialization.jsonObject(with: encoded, options: .init()) as? [String: [String: Float]])
+        let dictionary = try XCTUnwrap(try JSONSerialization.jsonObject(with: encoded, options: .init()) as? [String: [String: Double]])
         XCTAssertEqual(dictionary["origin"]?["x"], 9.8)
         XCTAssertEqual(dictionary["origin"]?["y"], 8.7)
         XCTAssertEqual(dictionary["size"]?["width"], 7.6)
@@ -162,10 +162,10 @@ final class RectTests: XCTestCase {
         XCTAssertFalse(rect.isEmpty)
         
         rect = .infinite
-        XCTAssertEqual(rect.origin.x, -Float.greatestFiniteMagnitude / 2)
-        XCTAssertEqual(rect.origin.y, -Float.greatestFiniteMagnitude / 2)
-        XCTAssertEqual(rect.size.width, Float.greatestFiniteMagnitude)
-        XCTAssertEqual(rect.size.height, Float.greatestFiniteMagnitude)
+        XCTAssertEqual(rect.origin.x, -Double.greatestFiniteMagnitude / 2)
+        XCTAssertEqual(rect.origin.y, -Double.greatestFiniteMagnitude / 2)
+        XCTAssertEqual(rect.size.width, Double.greatestFiniteMagnitude)
+        XCTAssertEqual(rect.size.height, Double.greatestFiniteMagnitude)
         XCTAssertFalse(rect.isZero)
         XCTAssertFalse(rect.isNaN)
         XCTAssertTrue(rect.isInfinite)
@@ -173,8 +173,8 @@ final class RectTests: XCTestCase {
         XCTAssertTrue(rect.isEmpty)
         
         rect = .null
-        XCTAssertEqual(rect.origin.x, Float.infinity)
-        XCTAssertEqual(rect.origin.y, Float.infinity)
+        XCTAssertEqual(rect.origin.x, Double.infinity)
+        XCTAssertEqual(rect.origin.y, Double.infinity)
         XCTAssertEqual(rect.size.width, 0.0)
         XCTAssertEqual(rect.size.height, 0.0)
         XCTAssertFalse(rect.isZero)
