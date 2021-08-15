@@ -1,26 +1,26 @@
 /// The representation of a single point in a two-dimensional plane.
 public struct Point {
-    public var x: Float
-    public var y: Float
+    public var x: Double
+    public var y: Double
     
     public init() {
         x = 0.0
         y = 0.0
     }
     
-    public init(x: Float, y: Float) {
+    public init(x: Double, y: Double) {
         self.x = x
         self.y = y
     }
     
-    public init(x: Int, y: Int) {
-        self.x = Float(x)
-        self.y = Float(y)
+    public init(x: Float, y: Float) {
+        self.x = Double(x)
+        self.y = Double(y)
     }
     
-    public init(x: Double, y: Double) {
-        self.x = Float(x)
-        self.y = Float(y)
+    public init(x: Int, y: Int) {
+        self.x = Double(x)
+        self.y = Double(y)
     }
 }
 

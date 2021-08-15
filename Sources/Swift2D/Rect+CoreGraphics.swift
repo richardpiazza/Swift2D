@@ -31,9 +31,4 @@ public extension CGRect {
             height: CGFloat(rect.height)
         )
     }
-    
-    @available(*, deprecated, renamed: "Rect(_:)", message: "Use Rect initializer directly")
-    var rect: Rect {
-        return Rect(origin: origin.point, size: size.size)
-    }
 }

@@ -15,17 +15,17 @@ public struct Rect {
         self.size = size
     }
     
+    public init(x: Double, y: Double, width: Double, height: Double) {
+        origin = Point(x: x, y: y)
+        size = Size(width: width, height: height)
+    }
+    
     public init(x: Float, y: Float, width: Float, height: Float) {
         origin = Point(x: x, y: y)
         size = Size(width: width, height: height)
     }
     
     public init(x: Int, y: Int, width: Int, height: Int) {
-        origin = Point(x: x, y: y)
-        size = Size(width: width, height: height)
-    }
-    
-    public init(x: Double, y: Double, width: Double, height: Double) {
         origin = Point(x: x, y: y)
         size = Size(width: width, height: height)
     }

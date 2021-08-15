@@ -34,8 +34,8 @@ final class PointTests: XCTestCase {
         XCTAssertEqual(point.y, 8.123)
         
         point = .init(x: 0.123456789, y: 0.987654321)
-        XCTAssertEqual(point.x, 0.12345679)
-        XCTAssertEqual(point.y, 0.9876543)
+        XCTAssertEqual(point.x, 0.123456789)
+        XCTAssertEqual(point.y, 0.987654321)
     }
     
     func testCustomStringConvertible() throws {
@@ -83,7 +83,7 @@ final class PointTests: XCTestCase {
         
         let encoded = try JSONEncoder().encode(point)
         #if canImport(ObjectiveC)
-        let dictionary = try XCTUnwrap(try JSONSerialization.jsonObject(with: encoded, options: .init()) as? [String: Float])
+        let dictionary = try XCTUnwrap(try JSONSerialization.jsonObject(with: encoded, options: .init()) as? [String: Double])
         XCTAssertEqual(dictionary["x"], 0.111234)
         XCTAssertEqual(dictionary["y"], 45.763)
         #else
