@@ -21,13 +21,12 @@ public extension Rect {
     var y: Double { origin.y }
     
     /// The width of the rectangle.
-    var width: Double { size.width
-    }
+    var width: Double { size.width }
     
     /// The height of the rectangle.
-    var height: Double { size.height
-    }
+    var height: Double { size.height }
     
+    /// The middle of the `Rect` both horizontally and vertically.
     var center: Point { Point(x: midX, y: midY) }
     
     /// The smallest value for the x-coordinate of the rectangle.
