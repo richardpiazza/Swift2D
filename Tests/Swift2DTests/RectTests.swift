@@ -8,23 +8,6 @@ import Foundation
 
 final class RectTests: XCTestCase {
     
-    static var allTests = [
-        ("testInitializers", testInitializers),
-        ("testCustomStringConvertible", testCustomStringConvertible),
-        ("testEquatable", testEquatable),
-        ("testCodable", testCodable),
-        ("testStaticReferences", testStaticReferences),
-        ("testComputedProperties", testComputedProperties),
-        ("testCoreGraphics", testCoreGraphics),
-        ("testContains", testContains),
-        ("testIntersects", testIntersects),
-        ("testIntersection", testIntersection),
-        ("testUnion", testUnion),
-        ("testOffsetBy", testOffsetBy),
-        ("testInsetBy", testInsetBy),
-        ("testExpandedBy", testExpandedBy),
-    ]
-    
     func testInitializers() throws {
         var rect: Rect = .zero
         

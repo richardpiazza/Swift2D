@@ -8,16 +8,6 @@ import Foundation
 
 final class PointTests: XCTestCase {
     
-    static var allTests = [
-        ("testInitializers", testInitializers),
-        ("testCustomStringConvertible", testCustomStringConvertible),
-        ("testEquatable", testEquatable),
-        ("testCodable", testCodable),
-        ("testStaticReferences", testStaticReferences),
-        ("testComputedProperties", testComputedProperties),
-        ("testCoreGraphics", testCoreGraphics),
-    ]
-    
     func testInitializers() throws {
         var point: Point = .zero
         
@@ -109,6 +99,10 @@ final class PointTests: XCTestCase {
     }
     
     func testComputedProperties() {
+        let point = Point(x: -5, y: 5)
+        let reflection = point.reflection(using: .zero)
+        XCTAssertEqual(reflection.x, 5)
+        XCTAssertEqual(reflection.y, -5)
     }
     
     func testCoreGraphics() throws {

@@ -8,16 +8,6 @@ import Foundation
 
 final class SizeTests: XCTestCase {
     
-    static var allTests = [
-        ("testInitializers", testInitializers),
-        ("testCustomStringConvertible", testCustomStringConvertible),
-        ("testEquatable", testEquatable),
-        ("testCodable", testCodable),
-        ("testStaticReferences", testStaticReferences),
-        ("testComputedProperties", testComputedProperties),
-        ("testCoreGraphics", testCoreGraphics),
-    ]
-    
     func testInitializers() throws {
         var size: Size = .zero
         

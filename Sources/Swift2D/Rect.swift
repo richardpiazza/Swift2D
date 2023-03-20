@@ -1,16 +1,12 @@
 /// The location and dimensions of a rectangle.
 public struct Rect {
+    
     /// A point that specifies the coordinates of the rectangle’s origin.
     public var origin: Point
     /// A size that specifies the height and width of the rectangle.
     public var size: Size
     
-    public init() {
-        origin = .zero
-        size = .zero
-    }
-    
-    public init(origin: Point, size: Size) {
+    public init(origin: Point = .zero, size: Size = .zero) {
         self.origin = origin
         self.size = size
     }
@@ -34,7 +30,7 @@ public struct Rect {
 // MARK: - CustomStringConvertible
 extension Rect: CustomStringConvertible {
     public var description: String {
-        return "Rect(origin: \(origin), size: \(size))"
+        "Rect(origin: \(origin), size: \(size))"
     }
 }
 

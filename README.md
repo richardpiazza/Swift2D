@@ -16,6 +16,33 @@ Swift library for working in two-dimensional coordinate systems.
 
 This library provides structs for `Point`, `Size`, and `Rect` based on the swift standard library. No `Foundation` or `CoreGraphics` imports are required.
 
+### Point
+
+```swift
+struct Point {
+  var x: Double
+  var y: Double
+}
+```
+
+### Size
+
+```swift
+struct Size {
+  var width: Double
+  var height: Double
+}
+```
+
+### Rect
+
+```swift
+struct Rect {
+  var origin: Point
+  var size: Size
+}
+```
+
 ## Usage
 
 Swift2D is distributed using the [Swift Package Manager](https://swift.org/package-manager). To install it into a project, add it as a dependency within your `Package.swift` manifest:

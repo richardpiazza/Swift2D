@@ -1,14 +1,10 @@
 /// The representation of a single point in a two-dimensional plane.
 public struct Point {
+    
     public var x: Double
     public var y: Double
     
-    public init() {
-        x = 0.0
-        y = 0.0
-    }
-    
-    public init(x: Double, y: Double) {
+    public init(x: Double = 0.0, y: Double = 0.0) {
         self.x = x
         self.y = y
     }
@@ -27,7 +23,7 @@ public struct Point {
 // MARK: - CustomStringConvertible
 extension Point: CustomStringConvertible {
     public var description: String {
-        return "Point(x: \(x), y: \(y))"
+        "Point(x: \(x), y: \(y))"
     }
 }
 

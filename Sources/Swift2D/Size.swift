@@ -1,14 +1,10 @@
 /// A representation of two-dimensional width and height values.
 public struct Size {
+    
     public var width: Double
     public var height: Double
     
-    public init() {
-        width = 0.0
-        height = 0.0
-    }
-    
-    public init(width: Double, height: Double) {
+    public init(width: Double = 0.0, height: Double = 0.0) {
         self.width = width
         self.height = height
     }
@@ -27,7 +23,7 @@ public struct Size {
 // MARK: - CustomStringConvertible
 extension Size: CustomStringConvertible {
     public var description: String {
-        return "Size(width: \(width), height: \(height))"
+        "Size(width: \(width), height: \(height))"
     }
 }
 
