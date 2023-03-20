@@ -5,52 +5,30 @@ public extension Rect {
     static let infinite: Rect = Rect(origin: .infinite, size: .infinite)
     static let null: Rect = Rect(origin: .null, size: .zero)
     
-    var isZero: Bool {
-        return self == .zero
-    }
-    
-    var isNaN: Bool {
-        return self == .nan
-    }
-    
-    var isInfinite: Bool {
-        return self == .infinite
-    }
-    
-    var isNull: Bool {
-        return origin == .infinite || origin == .null
-    }
-    
-    var isEmpty: Bool {
-        return isNull || width == 0.0 || height == 0.0
-    }
+    var isZero: Bool { self == .zero }
+    var isNaN: Bool { self == .nan }
+    var isInfinite: Bool { self == .infinite }
+    var isNull: Bool { origin == .infinite || origin == .null }
+    var isEmpty: Bool { isNull || width == 0.0 || height == 0.0 }
 }
 
 // MARK: - Convenience Accessors
 public extension Rect {
     /// The x-coordinate of the rectangle origin
-    var x: Double {
-        return origin.x
-    }
+    var x: Double { origin.x }
     
     /// The y-coordinate of the rectangle origin
-    var y: Double {
-        return origin.y
-    }
+    var y: Double { origin.y }
     
     /// The width of the rectangle.
-    var width: Double {
-        return size.width
+    var width: Double { size.width
     }
     
     /// The height of the rectangle.
-    var height: Double {
-        return size.height
+    var height: Double { size.height
     }
     
-    var center: Point {
-        return Point(x: midX, y: midY)
-    }
+    var center: Point { Point(x: midX, y: midY) }
     
     /// The smallest value for the x-coordinate of the rectangle.
     var minX: Double {
@@ -62,9 +40,7 @@ public extension Rect {
     }
     
     /// The x-coordinate that establishes the center of a rectangle.
-    var midX: Double {
-        return minX + size.xRadius
-    }
+    var midX: Double { minX + size.xRadius }
     
     /// The largest value of the x-coordinate for the rectangle.
     var maxX: Double {
@@ -85,9 +61,7 @@ public extension Rect {
     }
     
     /// The y-coordinate that establishes the center of the rectangle.
-    var midY: Double {
-        return minY + size.yRadius
-    }
+    var midY: Double { minY + size.yRadius }
     
     /// The largest value for the y-coordinate of the rectangle.
     var maxY: Double {
@@ -122,13 +96,9 @@ public extension Rect {
         return (minX..<maxX).contains(point.x) && (minY..<maxY).contains(point.y)
     }
     
-    func contains(_ rect: Rect) -> Bool {
-        return union(rect) == self
-    }
+    func contains(_ rect: Rect) -> Bool { union(rect) == self }
     
-    func intersects(_ rect: Rect) -> Bool {
-        return !intersection(rect).isNull
-    }
+    func intersects(_ rect: Rect) -> Bool { !intersection(rect).isNull }
     
     func intersection(_ rect: Rect) -> Rect {
         guard !isNull else {
