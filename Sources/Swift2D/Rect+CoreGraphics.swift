@@ -14,10 +14,10 @@ public extension Rect {
             height: Float(rect.height)
         )
     }
-    
+
     @available(*, deprecated, renamed: "CGRect(_:)", message: "Use CGRect initializer directly")
     var cgRect: CGRect {
-        return CGRect(self)
+        CGRect(self)
     }
 }
 
