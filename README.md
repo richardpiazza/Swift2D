@@ -2,7 +2,6 @@
 
 Swift library for working in two-dimensional coordinate systems.
 
-![](https://github.com/richardpiazza/Swift2D/workflows/Swift/badge.svg?branch=main)
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Frichardpiazza%2FSwift2D%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/richardpiazza/Swift2D)
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Frichardpiazza%2FSwift2D%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/richardpiazza/Swift2D)
 
