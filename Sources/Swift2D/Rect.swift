@@ -1,5 +1,10 @@
 /// The location and dimensions of a rectangle.
-public struct Rect: Hashable, Codable, Sendable {
+public struct Rect: Hashable, Codable, Sendable, CustomStringConvertible {
+
+    public static let zero: Rect = Rect(origin: .zero, size: .zero)
+    public static let nan: Rect = Rect(origin: .nan, size: .nan)
+    public static let infinite: Rect = Rect(origin: .infinite, size: .infinite)
+    public static let null: Rect = Rect(origin: .null, size: .zero)
 
     /// A point that specifies the coordinates of the rectangle’s origin.
     public let origin: Point
@@ -26,11 +31,7 @@ public struct Rect: Hashable, Codable, Sendable {
         size = Size(width: width, height: height)
     }
 
-    public static let zero: Rect = .init(origin: .zero, size: .zero)
-    public static let nan: Rect = .init(origin: .nan, size: .nan)
-    public static let infinite: Rect = .init(origin: .infinite, size: .infinite)
-    public static let null: Rect = .init(origin: .null, size: .zero)
-
+    public var description: String { "Rect(origin: \(origin), size: \(size))" }
     public var isZero: Bool { self == .zero }
     public var isNaN: Bool { self == .nan }
     public var isInfinite: Bool { self == .infinite }
@@ -62,7 +63,7 @@ public struct Rect: Hashable, Codable, Sendable {
     }
 
     /// The x-coordinate that establishes the center of a rectangle.
-    public var midX: Double { minX + size.xRadius }
+    public var midX: Double { minX + size.widthRadius }
 
     /// The largest value of the x-coordinate for the rectangle.
     public var maxX: Double {
@@ -83,7 +84,7 @@ public struct Rect: Hashable, Codable, Sendable {
     }
 
     /// The y-coordinate that establishes the center of the rectangle.
-    public var midY: Double { minY + size.yRadius }
+    public var midY: Double { minY + size.heightRadius }
 
     /// The largest value for the y-coordinate of the rectangle.
     public var maxY: Double {
@@ -103,11 +104,11 @@ public struct Rect: Hashable, Codable, Sendable {
         return Rect(x: minX, y: minY, width: abs(width), height: abs(height))
     }
 
-    public func with(origin value: Point) -> Rect {
+    public func origin(_ value: Point) -> Rect {
         Rect(origin: value, size: size)
     }
 
-    public func with(size value: Size) -> Rect {
+    public func size(_ value: Size) -> Rect {
         Rect(origin: origin, size: value)
     }
 
@@ -237,8 +238,14 @@ public struct Rect: Hashable, Codable, Sendable {
     }
 }
 
-extension Rect: CustomStringConvertible {
-    public var description: String {
-        "Rect(origin: \(origin), size: \(size))"
+public extension Rect {
+    @available(*, deprecated, renamed: "origin(_:)")
+    func with(origin value: Point) -> Rect {
+        Rect(origin: value, size: size)
+    }
+
+    @available(*, deprecated, renamed: "size(_:)")
+    func with(size value: Size) -> Rect {
+        Rect(origin: origin, size: value)
     }
 }

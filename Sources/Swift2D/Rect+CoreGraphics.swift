@@ -8,10 +8,8 @@ public extension Rect {
     /// Initialize a `Rect` using the provided `CGRect` values.
     init(_ rect: CGRect) {
         self.init(
-            x: Float(rect.origin.x),
-            y: Float(rect.origin.y),
-            width: Float(rect.width),
-            height: Float(rect.height)
+            origin: Point(rect.origin),
+            size: Size(rect.size)
         )
     }
 
@@ -25,10 +23,10 @@ public extension CGRect {
     /// Initialize a `CGRect` using the provided `Rect` values.
     init(_ rect: Rect) {
         self.init(
-            x: CGFloat(rect.x),
-            y: CGFloat(rect.y),
-            width: CGFloat(rect.width),
-            height: CGFloat(rect.height)
+            x: rect.x,
+            y: rect.y,
+            width: rect.width,
+            height: rect.height
         )
     }
 }
