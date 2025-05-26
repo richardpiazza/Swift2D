@@ -10,19 +10,19 @@ final class SizeTests: XCTestCase {
     func testInitializers() throws {
         var size: Size = .zero
 
-        size = .init()
+        size = Size()
         XCTAssertEqual(size.width, 0.0)
         XCTAssertEqual(size.height, 0.0)
 
-        size = .init(width: 5, height: 8)
+        size = Size(width: 5, height: 8)
         XCTAssertEqual(size.width, 5.0)
         XCTAssertEqual(size.height, 8.0)
 
-        size = .init(width: 5.876, height: 8.123)
+        size = Size(width: 5.876, height: 8.123)
         XCTAssertEqual(size.width, 5.876)
         XCTAssertEqual(size.height, 8.123)
 
-        size = .init(width: 0.123456789, height: 0.987654321)
+        size = Size(width: 0.123456789, height: 0.987654321)
         XCTAssertEqual(size.width, 0.123456789)
         XCTAssertEqual(size.height, 0.987654321)
     }
@@ -45,8 +45,8 @@ final class SizeTests: XCTestCase {
         s2 = .infinite
         XCTAssertTrue(s1 == s2)
 
-        s1 = .init(width: 54.44, height: 65.55)
-        s2 = .init(width: 55.56, height: 44.45)
+        s1 = Size(width: 54.44, height: 65.55)
+        s2 = Size(width: 55.56, height: 44.45)
         XCTAssertFalse(s1 == s2)
     }
 
@@ -63,7 +63,7 @@ final class SizeTests: XCTestCase {
         XCTAssertEqual(size.width, 8.8)
         XCTAssertEqual(size.height, 4.0)
 
-        size = size.with(width: 0.111234).with(height: 45.763)
+        size = size.width(0.111234).height(45.763)
 
         let encoded = try JSONEncoder().encode(size)
         #if canImport(ObjectiveC)
@@ -94,8 +94,8 @@ final class SizeTests: XCTestCase {
 
     func testComputedProperties() {
         let size = Size(width: 15.0, height: -5.0)
-        XCTAssertEqual(size.xRadius, 7.5)
-        XCTAssertEqual(size.yRadius, 2.5)
+        XCTAssertEqual(size.widthRadius, 7.5)
+        XCTAssertEqual(size.heightRadius, 2.5)
         XCTAssertEqual(size.maxRadius, 7.5)
         XCTAssertEqual(size.minRadius, 2.5)
         XCTAssertEqual(size.center, Point(x: 7.5, y: 2.5))
@@ -106,7 +106,7 @@ final class SizeTests: XCTestCase {
         var cgSize = CGSize(size)
         XCTAssertEqual(cgSize.width, 45.0)
         XCTAssertEqual(cgSize.height, 60.0)
-        XCTAssertEqual(Size(cgSize), .init(width: 45.0, height: 60.0))
+        XCTAssertEqual(Size(cgSize), Size(width: 45.0, height: 60.0))
         cgSize = CGSize(Size(width: 24.7, height: 31.5))
         XCTAssertEqual(cgSize.width, 24.7, accuracy: 0.0001)
         XCTAssertEqual(cgSize.height, 31.5)

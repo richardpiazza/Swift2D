@@ -10,31 +10,34 @@ final class RectTests: XCTestCase {
     func testInitializers() throws {
         var rect: Rect = .zero
 
-        rect = .init()
+        rect = Rect()
         XCTAssertEqual(rect.origin.x, 0.0)
         XCTAssertEqual(rect.origin.y, 0.0)
         XCTAssertEqual(rect.size.width, 0.0)
         XCTAssertEqual(rect.size.height, 0.0)
 
-        rect = .init(origin: Point(x: 4, y: 5), size: Size(width: 1.4, height: 5.2))
+        rect = Rect(origin: Point(x: 4, y: 5), size: Size(width: 1.4, height: 5.2))
         XCTAssertEqual(rect.origin.x, 4.0)
         XCTAssertEqual(rect.origin.y, 5.0)
         XCTAssertEqual(rect.size.width, 1.4)
         XCTAssertEqual(rect.size.height, 5.2)
 
-        rect = .init(x: 1.2, y: 3.4, width: 5.6, height: 7.8)
+        rect = Rect(x: 1.2, y: 3.4, width: 5.6, height: 7.8)
         XCTAssertEqual(rect.origin.x, 1.2)
         XCTAssertEqual(rect.origin.y, 3.4)
         XCTAssertEqual(rect.size.width, 5.6)
         XCTAssertEqual(rect.size.height, 7.8)
 
-        rect = .init(x: 1, y: 2, width: 3, height: 4)
+        rect = Rect(x: 1, y: 2, width: 3, height: 4)
         XCTAssertEqual(rect.origin.x, 1.0)
         XCTAssertEqual(rect.origin.y, 2.0)
         XCTAssertEqual(rect.size.width, 3.0)
         XCTAssertEqual(rect.size.height, 4.0)
 
-        rect = .init(origin: Point(x: 4.87654321, y: 5.87654321), size: Size(width: 6.87654321, height: 7.87654321))
+        rect = Rect(
+            origin: Point(x: 4.87654321, y: 5.87654321),
+            size: Size(width: 6.87654321, height: 7.87654321)
+        )
         XCTAssertEqual(rect.origin.x, 4.87654321)
         XCTAssertEqual(rect.origin.y, 5.87654321)
         XCTAssertEqual(rect.size.width, 6.87654321)
@@ -44,13 +47,22 @@ final class RectTests: XCTestCase {
     func testCustomStringConvertible() throws {
         var rect: Rect = .zero
 
-        rect = Rect(origin: .init(x: 15.0, y: 20.0), size: .init(width: 25.0, height: 10.0))
+        rect = Rect(
+            origin: Point(x: 15.0, y: 20.0),
+            size: Size(width: 25.0, height: 10.0)
+        )
         XCTAssertEqual(rect.description, "Rect(origin: Point(x: 15.0, y: 20.0), size: Size(width: 25.0, height: 10.0))")
 
-        rect = Rect(origin: .init(x: 15.0, y: 20.0), size: .init(width: -25.0, height: -10.0))
+        rect = Rect(
+            origin: Point(x: 15.0, y: 20.0),
+            size: Size(width: -25.0, height: -10.0)
+        )
         XCTAssertEqual(rect.description, "Rect(origin: Point(x: 15.0, y: 20.0), size: Size(width: -25.0, height: -10.0))")
 
-        rect = Rect(origin: .init(x: -15.0, y: -20.0), size: .init(width: -25.0, height: -10.0))
+        rect = Rect(
+            origin: Point(x: -15.0, y: -20.0),
+            size: Size(width: -25.0, height: -10.0)
+        )
         XCTAssertEqual(rect.description, "Rect(origin: Point(x: -15.0, y: -20.0), size: Size(width: -25.0, height: -10.0))")
     }
 
@@ -100,7 +112,9 @@ final class RectTests: XCTestCase {
         XCTAssertEqual(rect.size.width, 3.4)
         XCTAssertEqual(rect.size.height, 4.5)
 
-        rect = rect.with(origin: Point(x: 9.8, y: 8.7)).with(size: Size(width: 7.6, height: 6.5))
+        rect = rect
+            .origin(Point(x: 9.8, y: 8.7))
+            .size(Size(width: 7.6, height: 6.5))
 
         let encoded = try JSONEncoder().encode(rect)
         #if canImport(ObjectiveC)
@@ -206,7 +220,7 @@ final class RectTests: XCTestCase {
         XCTAssertEqual(cgRect.origin.y, 3.4, accuracy: 0.00001)
         XCTAssertEqual(cgRect.width, 5.6, accuracy: 0.00001)
         XCTAssertEqual(cgRect.height, 7.8, accuracy: 0.00001)
-        cgRect = CGRect(.init(origin: Point(x: 12, y: 21), size: Size(width: 34, height: 43)))
+        cgRect = CGRect(Rect(origin: Point(x: 12, y: 21), size: Size(width: 34, height: 43)))
         let rect = Rect(cgRect)
         XCTAssertEqual(rect.x, 12.0, accuracy: 0.00001)
         XCTAssertEqual(rect.y, 21.0, accuracy: 0.00001)
@@ -238,7 +252,7 @@ final class RectTests: XCTestCase {
         let rect1 = Rect(x: 0, y: 0, width: 100, height: 100)
         var rect2 = Rect(x: 75, y: 75, width: 100, height: 100)
         XCTAssertTrue(rect1.intersects(rect2))
-        rect2 = rect2.with(origin: Point(x: 101, y: 101))
+        rect2 = rect2.origin(Point(x: 101, y: 101))
         XCTAssertFalse(rect1.intersects(rect2))
     }
 
@@ -285,7 +299,7 @@ final class RectTests: XCTestCase {
     }
 
     func testOffsetBy() {
-        let rect: Rect = .init(x: 40, y: 50, width: 60, height: 70)
+        let rect: Rect = Rect(x: 40, y: 50, width: 60, height: 70)
 
         var r = Rect.null.offsetBy(dx: 10, dy: 10)
         XCTAssertTrue(r.isNull)
@@ -308,11 +322,11 @@ final class RectTests: XCTestCase {
         var r = rect.insetBy(dx: 10.0, dy: 10.0)
         XCTAssertTrue(r.isNull)
 
-        rect = .init(x: 44.33, y: 22.11, width: 11.22, height: 33.44)
+        rect = Rect(x: 44.33, y: 22.11, width: 11.22, height: 33.44)
         r = rect.insetBy(dx: 10.0, dy: 10.0)
         XCTAssertTrue(r.isNull)
 
-        rect = .init(x: 44.33, y: 22.11, width: 44.33, height: 22.11)
+        rect = Rect(x: 44.33, y: 22.11, width: 44.33, height: 22.11)
         r = rect.insetBy(dx: 10.0, dy: 10.0)
         XCTAssertEqual(r.origin.x, 54.33)
         XCTAssertEqual(r.origin.y, 32.11)

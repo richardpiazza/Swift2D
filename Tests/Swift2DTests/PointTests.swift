@@ -10,19 +10,19 @@ final class PointTests: XCTestCase {
     func testInitializers() throws {
         var point: Point = .zero
 
-        point = .init()
+        point = Point()
         XCTAssertEqual(point.x, 0.0)
         XCTAssertEqual(point.y, 0.0)
 
-        point = .init(x: 5, y: 8)
+        point = Point(x: 5, y: 8)
         XCTAssertEqual(point.x, 5.0)
         XCTAssertEqual(point.y, 8.0)
 
-        point = .init(x: 5.876, y: 8.123)
+        point = Point(x: 5.876, y: 8.123)
         XCTAssertEqual(point.x, 5.876)
         XCTAssertEqual(point.y, 8.123)
 
-        point = .init(x: 0.123456789, y: 0.987654321)
+        point = Point(x: 0.123456789, y: 0.987654321)
         XCTAssertEqual(point.x, 0.123456789)
         XCTAssertEqual(point.y, 0.987654321)
     }
@@ -49,8 +49,8 @@ final class PointTests: XCTestCase {
         p2 = .null
         XCTAssertTrue(p1 == p2)
 
-        p1 = .init(x: 2.5, y: 1.75)
-        p2 = .init(x: 4, y: 7)
+        p1 = Point(x: 2.5, y: 1.75)
+        p2 = Point(x: 4, y: 7)
         XCTAssertFalse(p1 == p2)
     }
 
@@ -67,7 +67,7 @@ final class PointTests: XCTestCase {
         XCTAssertEqual(point.x, 8.8)
         XCTAssertEqual(point.y, 4.0)
 
-        point = point.with(x: 0.111234).with(y: 45.763)
+        point = point.x(0.111234).y(45.763)
 
         let encoded = try JSONEncoder().encode(point)
         #if canImport(ObjectiveC)
@@ -98,7 +98,7 @@ final class PointTests: XCTestCase {
 
     func testComputedProperties() {
         let point = Point(x: -5, y: 5)
-        let reflection = point.reflection(using: .zero)
+        let reflection = point.reflecting(around: .zero)
         XCTAssertEqual(reflection.x, 5)
         XCTAssertEqual(reflection.y, -5)
     }
@@ -108,7 +108,7 @@ final class PointTests: XCTestCase {
         var cgPoint = CGPoint(point)
         XCTAssertEqual(cgPoint.x, 45.0)
         XCTAssertEqual(cgPoint.y, 60.0)
-        XCTAssertEqual(Point(cgPoint), .init(x: 45.0, y: 60.0))
+        XCTAssertEqual(Point(cgPoint), Point(x: 45.0, y: 60.0))
         cgPoint = CGPoint(Point(x: 24.7, y: 31.5))
         XCTAssertEqual(cgPoint.x, 24.7, accuracy: 0.0001)
         XCTAssertEqual(cgPoint.y, 31.5)
@@ -120,47 +120,47 @@ final class PointTests: XCTestCase {
 
         // x=x y=y
         var point = Point(x: 250, y: 250)
-        var reflection = point.reflection(using: center)
+        var reflection = point.reflecting(around: center)
         XCTAssertEqual(reflection, Point(x: 250, y: 250))
 
         // x→x y↓y
         point = Point(x: 150, y: 50)
-        reflection = point.reflection(using: center)
+        reflection = point.reflecting(around: center)
         XCTAssertEqual(reflection, Point(x: 350, y: 450))
 
         // x→x y=y
         point = Point(x: 150, y: 250)
-        reflection = point.reflection(using: center)
+        reflection = point.reflecting(around: center)
         XCTAssertEqual(reflection, Point(x: 350, y: 250))
 
         // x=x y↓y
         point = Point(x: 250, y: 50)
-        reflection = point.reflection(using: center)
+        reflection = point.reflecting(around: center)
         XCTAssertEqual(reflection, Point(x: 250, y: 450))
 
         // x←x y↑y
         point = Point(x: 350, y: 450)
-        reflection = point.reflection(using: center)
+        reflection = point.reflecting(around: center)
         XCTAssertEqual(reflection, Point(x: 150, y: 50))
 
         // x=x y↑y
         point = Point(x: 250, y: 450)
-        reflection = point.reflection(using: center)
+        reflection = point.reflecting(around: center)
         XCTAssertEqual(reflection, Point(x: 250, y: 50))
 
         // x←x y=y
         point = Point(x: 350, y: 250)
-        reflection = point.reflection(using: center)
+        reflection = point.reflecting(around: center)
         XCTAssertEqual(reflection, Point(x: 150, y: 250))
 
         // x→x y↑y
         point = Point(x: 150, y: 450)
-        reflection = point.reflection(using: center)
+        reflection = point.reflecting(around: center)
         XCTAssertEqual(reflection, Point(x: 350, y: 50))
 
         // x←x y↓y
         point = Point(x: 350, y: 50)
-        reflection = point.reflection(using: center)
+        reflection = point.reflecting(around: center)
         XCTAssertEqual(reflection, Point(x: 150, y: 450))
     }
 }

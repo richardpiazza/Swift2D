@@ -9,12 +9,27 @@ Swift library for working in two-dimensional coordinate systems.
 
 This library provides structs for `Point`, `Size`, and `Rect` based on the swift standard library. No `Foundation` or `CoreGraphics` imports are required.
 
+Most of this work is taken from the [swift-corelibs-foundation](https://github.com/swiftlang/swift-corelibs-foundation/blob/cac38ff51cd4a120387afb02f065c3f86fcfd42a/Sources/Foundation/NSGeometry.swift) implementation.
+
 ### Point
 
 ```swift
 struct Point {
-  var x: Double
-  var y: Double
+  let x: Double
+  let y: Double
+}
+```
+
+`Point` also has accessors for:
+
+```swift
+extension Point {
+  var description: String
+  var isZero: Bool
+  var isNaN: Bool
+  func x(_:) -> Point
+  func y(_:) -> Point
+  func reflecting(around:) -> Point
 }
 ```
 
@@ -22,8 +37,25 @@ struct Point {
 
 ```swift
 struct Size {
-  var width: Double
-  var height: Double
+  let width: Double
+  let height: Double
+}
+```
+
+Additional computed properties and functions of `Size`:
+
+```swift
+extension Size {
+  var description: String
+  var isZero: Bool
+  var isNaN: Bool
+  var widthRadius: Double
+  var heightRadius: Double
+  var maxRadius: Double
+  var minRadius: Double
+  var center: Point
+  func width(_:) -> Size
+  func height(_:) -> Size
 }
 ```
 
@@ -31,27 +63,41 @@ struct Size {
 
 ```swift
 struct Rect {
-  var origin: Point
-  var size: Size
+  let origin: Point
+  let size: Size
 }
 ```
 
-## Installation
-
-This package is distributed using the [Swift Package Manager](https://swift.org/package-manager). To install it into a project, add it as a dependency within your `Package.swift` manifest:
-
+The `Rect` type has many additional properties:
 ```swift
-let package = Package(
-    ...
-    dependencies: [
-        .package(url: "https://github.com/richardpiazza/Swift2D.git", from: "2.1.0")
-    ],
-    ...
-)
-```
-
-Then import the **Swift2D** packages wherever you'd like to use it:
-
-```swift
-import Swift2D
+extension Rect {
+  var description: String
+  var isZero: Bool
+  var isNaN: Bool
+  var isInfinite: Bool
+  var isNull: Bool
+  var isEmpty: Bool
+  var x: Double
+  var y: Double
+  var width: Double
+  var height: Double
+  var center: Point
+  var minX: Double
+  var midX: Double
+  var maxX: Double
+  var minY: Double
+  var midY: Double
+  var maxY: Double
+  var standardized: Rect
+  func origin(_:) -> Rect
+  func size(_:) -> Rect
+  func contains(_: Point) -> Bool
+  func contains(_: Rect) -> Bool
+  func intersects(_: Rect) -> Bool
+  func intersection(_: Rect) -> Rect
+  func union(_: Rect) -> Rect
+  func offsetBy(dx:dy:) -> Rect
+  func insetBy(dx:dy:) -> Rect
+  func expandedBy(dx:dy:) -> Rect
+}
 ```
