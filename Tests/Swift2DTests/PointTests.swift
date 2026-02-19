@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 final class PointTests: XCTestCase {
-    func testInitializers() throws {
+    func testInitializers() {
         var point: Point = .zero
 
         point = Point()
@@ -27,12 +27,12 @@ final class PointTests: XCTestCase {
         XCTAssertEqual(point.y, 0.987654321)
     }
 
-    func testCustomStringConvertible() throws {
+    func testCustomStringConvertible() {
         let point = Point(x: 5.0, y: -5.0)
         XCTAssertEqual(point.description, "Point(x: 5.0, y: -5.0)")
     }
 
-    func testEquatable() throws {
+    func testEquatable() {
         var p1: Point = .zero
         var p2: Point = .zero
         XCTAssertTrue(p1 == p2)
@@ -77,8 +77,8 @@ final class PointTests: XCTestCase {
         #else
         // On Linux systems the cast to 'Float' fails.
         let dictionary = try XCTUnwrap(JSONSerialization.jsonObject(with: encoded, options: .init()) as? [String: Double])
-        XCTAssertEqual(dictionary["x"]!, 0.111234, accuracy: 0.0001)
-        XCTAssertEqual(dictionary["y"]!, 45.763, accuracy: 0.001)
+        XCTAssertEqual(try XCTUnwrap(dictionary["x"]), 0.111234, accuracy: 0.0001)
+        XCTAssertEqual(try XCTUnwrap(dictionary["y"]), 45.763, accuracy: 0.001)
         #endif
     }
 
@@ -103,7 +103,7 @@ final class PointTests: XCTestCase {
         XCTAssertEqual(reflection.y, -5)
     }
 
-    func testCoreGraphics() throws {
+    func testCoreGraphics() {
         let point = Point(x: 45, y: 60)
         var cgPoint = CGPoint(point)
         XCTAssertEqual(cgPoint.x, 45.0)
@@ -114,7 +114,7 @@ final class PointTests: XCTestCase {
         XCTAssertEqual(cgPoint.y, 31.5)
     }
 
-    func testReflection() throws {
+    func testReflection() {
         let rect = Rect(origin: .zero, size: Size(width: 500, height: 500))
         let center = rect.center
 
