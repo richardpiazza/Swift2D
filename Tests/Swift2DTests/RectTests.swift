@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 final class RectTests: XCTestCase {
-    func testInitializers() throws {
+    func testInitializers() {
         var rect: Rect = .zero
 
         rect = Rect()
@@ -44,7 +44,7 @@ final class RectTests: XCTestCase {
         XCTAssertEqual(rect.size.height, 7.87654321)
     }
 
-    func testCustomStringConvertible() throws {
+    func testCustomStringConvertible() {
         var rect: Rect = .zero
 
         rect = Rect(
@@ -66,7 +66,7 @@ final class RectTests: XCTestCase {
         XCTAssertEqual(rect.description, "Rect(origin: Point(x: -15.0, y: -20.0), size: Size(width: -25.0, height: -10.0))")
     }
 
-    func testEquatable() throws {
+    func testEquatable() {
         var r1: Rect = .zero
         var r2: Rect = .zero
         XCTAssertTrue(r1 == r2)
@@ -126,10 +126,10 @@ final class RectTests: XCTestCase {
         #else
         // On Linux systems the cast to 'Float' fails.
         let dictionary = try XCTUnwrap(JSONSerialization.jsonObject(with: encoded, options: .init()) as? [String: [String: Double]])
-        XCTAssertEqual(dictionary["origin"]!["x"]!, 9.8, accuracy: 0.1)
-        XCTAssertEqual(dictionary["origin"]!["y"]!, 8.7, accuracy: 0.1)
-        XCTAssertEqual(dictionary["size"]!["width"]!, 7.6, accuracy: 0.1)
-        XCTAssertEqual(dictionary["size"]!["height"]!, 6.5, accuracy: 0.1)
+        XCTAssertEqual(try XCTUnwrap(dictionary["origin"]?["x"]), 9.8, accuracy: 0.1)
+        XCTAssertEqual(try XCTUnwrap(dictionary["origin"]?["y"]), 8.7, accuracy: 0.1)
+        XCTAssertEqual(try XCTUnwrap(dictionary["size"]?["width"]), 7.6, accuracy: 0.1)
+        XCTAssertEqual(try XCTUnwrap(dictionary["size"]?["height"]), 6.5, accuracy: 0.1)
         #endif
     }
 
@@ -214,7 +214,7 @@ final class RectTests: XCTestCase {
         XCTAssertTrue(rect.standardized.isNull)
     }
 
-    func testCoreGraphics() throws {
+    func testCoreGraphics() {
         var cgRect = CGRect(Rect(x: 1.2, y: 3.4, width: 5.6, height: 7.8))
         XCTAssertEqual(cgRect.origin.x, 1.2, accuracy: 0.00001)
         XCTAssertEqual(cgRect.origin.y, 3.4, accuracy: 0.00001)

@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 final class SizeTests: XCTestCase {
-    func testInitializers() throws {
+    func testInitializers() {
         var size: Size = .zero
 
         size = Size()
@@ -27,12 +27,12 @@ final class SizeTests: XCTestCase {
         XCTAssertEqual(size.height, 0.987654321)
     }
 
-    func testCustomStringConvertible() throws {
+    func testCustomStringConvertible() {
         let size = Size(width: 43.21, height: 87.65)
         XCTAssertEqual(size.description, "Size(width: 43.21, height: 87.65)")
     }
 
-    func testEquatable() throws {
+    func testEquatable() {
         var s1: Size = .zero
         var s2: Size = .zero
         XCTAssertTrue(s1 == s2)
@@ -73,8 +73,8 @@ final class SizeTests: XCTestCase {
         #else
         // On Linux systems the cast to 'Float' fails.
         let dictionary = try XCTUnwrap(JSONSerialization.jsonObject(with: encoded, options: .init()) as? [String: Double])
-        XCTAssertEqual(dictionary["width"]!, 0.111234, accuracy: 0.0001)
-        XCTAssertEqual(dictionary["height"]!, 45.763, accuracy: 0.001)
+        XCTAssertEqual(try XCTUnwrap(dictionary["width"]), 0.111234, accuracy: 0.0001)
+        XCTAssertEqual(try XCTUnwrap(dictionary["height"]), 45.763, accuracy: 0.001)
         #endif
     }
 
@@ -101,7 +101,7 @@ final class SizeTests: XCTestCase {
         XCTAssertEqual(size.center, Point(x: 7.5, y: 2.5))
     }
 
-    func testCoreGraphics() throws {
+    func testCoreGraphics() {
         let size = Size(width: 45, height: 60)
         var cgSize = CGSize(size)
         XCTAssertEqual(cgSize.width, 45.0)
