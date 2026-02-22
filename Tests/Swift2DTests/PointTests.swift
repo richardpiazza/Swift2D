@@ -1,60 +1,59 @@
-@testable import Swift2D
-import XCTest
 #if canImport(CoreGraphics)
 import CoreGraphics
-#else
-import Foundation
 #endif
+import Foundation
+@testable import Swift2D
+import Testing
 
-final class PointTests: XCTestCase {
-    func testInitializers() {
+struct PointTests {
+    @Test func initializers() {
         var point: Point = .zero
 
         point = Point()
-        XCTAssertEqual(point.x, 0.0)
-        XCTAssertEqual(point.y, 0.0)
+        #expect(point.x == 0.0)
+        #expect(point.y == 0.0)
 
         point = Point(x: 5, y: 8)
-        XCTAssertEqual(point.x, 5.0)
-        XCTAssertEqual(point.y, 8.0)
+        #expect(point.x == 5.0)
+        #expect(point.y == 8.0)
 
         point = Point(x: 5.876, y: 8.123)
-        XCTAssertEqual(point.x, 5.876)
-        XCTAssertEqual(point.y, 8.123)
+        #expect(point.x == 5.876)
+        #expect(point.y == 8.123)
 
         point = Point(x: 0.123456789, y: 0.987654321)
-        XCTAssertEqual(point.x, 0.123456789)
-        XCTAssertEqual(point.y, 0.987654321)
+        #expect(point.x == 0.123456789)
+        #expect(point.y == 0.987654321)
     }
 
-    func testCustomStringConvertible() {
+    @Test func customStringConvertible() {
         let point = Point(x: 5.0, y: -5.0)
-        XCTAssertEqual(point.description, "Point(x: 5.0, y: -5.0)")
+        #expect(point.description == "Point(x: 5.0, y: -5.0)")
     }
 
-    func testEquatable() {
+    @Test func equatable() {
         var p1: Point = .zero
         var p2: Point = .zero
-        XCTAssertTrue(p1 == p2)
+        #expect(p1 == p2)
 
         p1 = .nan
         p2 = .nan
-        XCTAssertTrue(p1 == p2)
+        #expect(p1 == p2)
 
         p1 = .infinite
         p2 = .infinite
-        XCTAssertTrue(p1 == p2)
+        #expect(p1 == p2)
 
         p1 = .null
         p2 = .null
-        XCTAssertTrue(p1 == p2)
+        #expect(p1 == p2)
 
         p1 = Point(x: 2.5, y: 1.75)
         p2 = Point(x: 4, y: 7)
-        XCTAssertFalse(p1 == p2)
+        #expect(p1 != p2)
     }
 
-    func testCodable() throws {
+    @Test func codable() throws {
         let json = """
         {
             "x": 8.8,
@@ -62,105 +61,98 @@ final class PointTests: XCTestCase {
         }
         """
 
-        let data = try XCTUnwrap(json.data(using: .utf8))
+        let data = try #require(json.data(using: .utf8))
         var point = try JSONDecoder().decode(Point.self, from: data)
-        XCTAssertEqual(point.x, 8.8)
-        XCTAssertEqual(point.y, 4.0)
+        #expect(point.x == 8.8)
+        #expect(point.y == 4.0)
 
         point = point.x(0.111234).y(45.763)
 
         let encoded = try JSONEncoder().encode(point)
-        #if canImport(ObjectiveC)
-        let dictionary = try XCTUnwrap(JSONSerialization.jsonObject(with: encoded, options: .init()) as? [String: Double])
-        XCTAssertEqual(dictionary["x"], 0.111234)
-        XCTAssertEqual(dictionary["y"], 45.763)
-        #else
-        // On Linux systems the cast to 'Float' fails.
-        let dictionary = try XCTUnwrap(JSONSerialization.jsonObject(with: encoded, options: .init()) as? [String: Double])
-        XCTAssertEqual(try XCTUnwrap(dictionary["x"]), 0.111234, accuracy: 0.0001)
-        XCTAssertEqual(try XCTUnwrap(dictionary["y"]), 45.763, accuracy: 0.001)
-        #endif
+        let dictionary = try #require(JSONSerialization.jsonObject(with: encoded, options: .init()) as? [String: Double])
+        #expect(dictionary["x"] == 0.111234)
+        #expect(dictionary["y"] == 45.763)
     }
 
-    func testStaticReferences() {
+    @Test func staticReferences() {
         var point: Point = .zero
-        XCTAssertEqual(point.x, 0.0)
-        XCTAssertEqual(point.y, 0.0)
-        XCTAssertTrue(point.isZero)
-        XCTAssertFalse(point.isNaN)
+        #expect(point.x == 0.0)
+        #expect(point.y == 0.0)
+        #expect(point.isZero)
+        #expect(!point.isNaN)
 
         point = .nan
-        XCTAssertTrue(point.x.isNaN)
-        XCTAssertTrue(point.y.isNaN)
-        XCTAssertFalse(point.isZero)
-        XCTAssertTrue(point.isNaN)
+        #expect(point.x.isNaN)
+        #expect(point.y.isNaN)
+        #expect(!point.isZero)
+        #expect(point.isNaN)
     }
 
-    func testComputedProperties() {
+    @Test func computedProperties() {
         let point = Point(x: -5, y: 5)
         let reflection = point.reflecting(around: .zero)
-        XCTAssertEqual(reflection.x, 5)
-        XCTAssertEqual(reflection.y, -5)
+        #expect(reflection.x == 5)
+        #expect(reflection.y == -5)
     }
 
-    func testCoreGraphics() {
+    @Test func coreGraphics() {
         let point = Point(x: 45, y: 60)
         var cgPoint = CGPoint(point)
-        XCTAssertEqual(cgPoint.x, 45.0)
-        XCTAssertEqual(cgPoint.y, 60.0)
-        XCTAssertEqual(Point(cgPoint), Point(x: 45.0, y: 60.0))
+        #expect(cgPoint.x == 45.0)
+        #expect(cgPoint.y == 60.0)
+        #expect(Point(cgPoint) == Point(x: 45.0, y: 60.0))
         cgPoint = CGPoint(Point(x: 24.7, y: 31.5))
-        XCTAssertEqual(cgPoint.x, 24.7, accuracy: 0.0001)
-        XCTAssertEqual(cgPoint.y, 31.5)
+        #expect(cgPoint.x == 24.7)
+        #expect(cgPoint.y == 31.5)
     }
 
-    func testReflection() {
+    @Test func reflection() {
         let rect = Rect(origin: .zero, size: Size(width: 500, height: 500))
         let center = rect.center
 
         // x=x y=y
         var point = Point(x: 250, y: 250)
         var reflection = point.reflecting(around: center)
-        XCTAssertEqual(reflection, Point(x: 250, y: 250))
+        #expect(reflection == Point(x: 250, y: 250))
 
         // x→x y↓y
         point = Point(x: 150, y: 50)
         reflection = point.reflecting(around: center)
-        XCTAssertEqual(reflection, Point(x: 350, y: 450))
+        #expect(reflection == Point(x: 350, y: 450))
 
         // x→x y=y
         point = Point(x: 150, y: 250)
         reflection = point.reflecting(around: center)
-        XCTAssertEqual(reflection, Point(x: 350, y: 250))
+        #expect(reflection == Point(x: 350, y: 250))
 
         // x=x y↓y
         point = Point(x: 250, y: 50)
         reflection = point.reflecting(around: center)
-        XCTAssertEqual(reflection, Point(x: 250, y: 450))
+        #expect(reflection == Point(x: 250, y: 450))
 
         // x←x y↑y
         point = Point(x: 350, y: 450)
         reflection = point.reflecting(around: center)
-        XCTAssertEqual(reflection, Point(x: 150, y: 50))
+        #expect(reflection == Point(x: 150, y: 50))
 
         // x=x y↑y
         point = Point(x: 250, y: 450)
         reflection = point.reflecting(around: center)
-        XCTAssertEqual(reflection, Point(x: 250, y: 50))
+        #expect(reflection == Point(x: 250, y: 50))
 
         // x←x y=y
         point = Point(x: 350, y: 250)
         reflection = point.reflecting(around: center)
-        XCTAssertEqual(reflection, Point(x: 150, y: 250))
+        #expect(reflection == Point(x: 150, y: 250))
 
         // x→x y↑y
         point = Point(x: 150, y: 450)
         reflection = point.reflecting(around: center)
-        XCTAssertEqual(reflection, Point(x: 350, y: 50))
+        #expect(reflection == Point(x: 350, y: 50))
 
         // x←x y↓y
         point = Point(x: 350, y: 50)
         reflection = point.reflecting(around: center)
-        XCTAssertEqual(reflection, Point(x: 150, y: 450))
+        #expect(reflection == Point(x: 150, y: 450))
     }
 }
