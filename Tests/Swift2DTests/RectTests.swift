@@ -35,7 +35,7 @@ struct RectTests {
 
         rect = Rect(
             origin: Point(x: 4.87654321, y: 5.87654321),
-            size: Size(width: 6.87654321, height: 7.87654321)
+            size: Size(width: 6.87654321, height: 7.87654321),
         )
         #expect(rect.origin.x == 4.87654321)
         #expect(rect.origin.y == 5.87654321)
@@ -48,19 +48,19 @@ struct RectTests {
 
         rect = Rect(
             origin: Point(x: 15.0, y: 20.0),
-            size: Size(width: 25.0, height: 10.0)
+            size: Size(width: 25.0, height: 10.0),
         )
         #expect(rect.description == "Rect(origin: Point(x: 15.0, y: 20.0), size: Size(width: 25.0, height: 10.0))")
 
         rect = Rect(
             origin: Point(x: 15.0, y: 20.0),
-            size: Size(width: -25.0, height: -10.0)
+            size: Size(width: -25.0, height: -10.0),
         )
         #expect(rect.description == "Rect(origin: Point(x: 15.0, y: 20.0), size: Size(width: -25.0, height: -10.0))")
 
         rect = Rect(
             origin: Point(x: -15.0, y: -20.0),
-            size: Size(width: -25.0, height: -10.0)
+            size: Size(width: -25.0, height: -10.0),
         )
         #expect(rect.description == "Rect(origin: Point(x: -15.0, y: -20.0), size: Size(width: -25.0, height: -10.0))")
     }

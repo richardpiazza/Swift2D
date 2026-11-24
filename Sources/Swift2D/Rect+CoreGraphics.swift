@@ -9,7 +9,7 @@ public extension Rect {
     init(_ rect: CGRect) {
         self.init(
             origin: Point(rect.origin),
-            size: Size(rect.size)
+            size: Size(rect.size),
         )
     }
 
@@ -26,7 +26,7 @@ public extension CGRect {
             x: rect.x,
             y: rect.y,
             width: rect.width,
-            height: rect.height
+            height: rect.height,
         )
     }
 }

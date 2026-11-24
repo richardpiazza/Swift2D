@@ -1,4 +1,4 @@
-// swift-tools-version:5.9
+// swift-tools-version:6.2
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -11,31 +11,28 @@ let package = Package(
         .iOS(.v16),
         .tvOS(.v16),
         .watchOS(.v9),
-        .visionOS(.v1),
+        .visionOS(.v1), // .v2 ~ iOS 18
     ],
     products: [
         .library(
             name: "Swift2D",
-            targets: ["Swift2D"]
+            targets: ["Swift2D"],
         ),
     ],
-    dependencies: [
-        .package(url: "https://github.com/swiftlang/swift-testing", from: "6.2.0"),
-    ],
+    dependencies: [],
     targets: [
         .target(
             name: "Swift2D",
-            dependencies: []
+            dependencies: [],
         ),
         .testTarget(
             name: "Swift2DTests",
             dependencies: [
                 "Swift2D",
-                .product(name: "Testing", package: "swift-testing"),
-            ]
+            ],
         ),
     ],
-    swiftLanguageVersions: [.v5]
+    swiftLanguageModes: [.v5],
 )
 
 for target in package.targets {
