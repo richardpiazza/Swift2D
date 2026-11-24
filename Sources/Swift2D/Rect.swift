@@ -203,9 +203,9 @@ public struct Rect: Hashable, Codable, Sendable, CustomStringConvertible {
         return Rect(
             origin: Point(
                 x: rect.origin.x + dx,
-                y: rect.origin.y + dy
+                y: rect.origin.y + dy,
             ),
-            size: rect.size
+            size: rect.size,
         )
     }
 
@@ -218,12 +218,12 @@ public struct Rect: Hashable, Codable, Sendable, CustomStringConvertible {
         let rect = Rect(
             origin: Point(
                 x: normalized.x + dx,
-                y: normalized.y + dy
+                y: normalized.y + dy,
             ),
             size: Size(
                 width: normalized.width - (dx * 2),
-                height: normalized.height - (dy * 2)
-            )
+                height: normalized.height - (dy * 2),
+            ),
         )
 
         guard rect.size.width >= 0, rect.size.height >= 0 else {
