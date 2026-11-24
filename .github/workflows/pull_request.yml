@@ -59,7 +59,7 @@ jobs:
           "visionOS",
           "macOS,variant=Mac Catalyst",
         ]
-    runs-on: macos-26
+    runs-on: macos-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v6
